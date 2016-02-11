@@ -1,0 +1,19 @@
+{
+  "name": "riotblog",
+  "version": "0.0.1",
+  "description": "...",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maadborn/riotblog.git"
+  },
+  "author": "Mats Adborn",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/maadborn/riotblog/issues"
+  },
+  "homepage": "https://github.com/maadborn/riotblog#readme"
+}
