@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/maadborn/riotblog#readme",
   "dependencies": {
+    "requirejs": "^2.1.22",
     "riot": "^2.3.15"
   }
 }
