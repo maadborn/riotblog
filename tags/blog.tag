@@ -1,24 +1,17 @@
 <blog-app>
 	<h1 class="main-header">Riot blog</h1>
-	<!-- <h2>{ apa }</h2>
 	
-	<input name="blogtext" type="text" value={ apa }></input>
-	<button onclick={ go }>Update</button> -->
-	
-	<script>
-		/*this.apa = "asdf";
+	<post each={ posts }>
 
-		go(x) {
-			// debugger;
-			this.apa = this.blogtext.value;
-		};*/
+	<script>
+		/**/
+		this.posts = app.loadPosts();
 	</script>
-	
 	<style scoped>
 		:scope {
 			display: block;
 			margin: 0 auto;
-			padding-top: 15px;
+			padding: 15px;
 			height: 100%;
 			width: 600px;
 			background-color: #eee;
