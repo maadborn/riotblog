@@ -1,9 +1,13 @@
-'use strict';
+/*'use strict';*/
 
-var app = require('./app');
+//var app = require('./app');
+
+import { App } from './app'
 
 // Need a global for tags to access
 //window.app = app;
+
+let app = Object.create(App);
 
 app.init();
 

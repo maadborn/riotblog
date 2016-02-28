@@ -1,6 +1,11 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+/*'use strict';*/
+
 var riot = require('riot');
 
 var blogTag = require('../tags/blog.tag');
@@ -11,44 +16,67 @@ var tempdata = require('./tempdata.js');
 
 console.log('entering app.js');
 
-var app = {};
+var App = exports.App = {};
 
-app.posts = [];
+App.posts = [];
 
-app.init = function () {
+App.init = function () {
 	console.log('in app.init');
 	riot.mount('blog', { posts: this.loadPosts() });
 	// riot.mount('blog-editor');
 };
 
-app.loadPosts = function () {
-	app.posts = tempdata.posts;
-	return app.posts;
+App.loadPosts = function () {
+	App.posts = tempdata.posts;
+	return App.posts;
 };
 
-module.exports = app;
-
 console.log('leaving app.js');
+
+//module.exports = app;
+// export default app
+
+//export function test() { console.log('testing'); }
 
 },{"../tags/blog-editor.tag":4,"../tags/blog.tag":5,"../tags/post.tag":6,"./tempdata.js":3,"riot":7}],2:[function(require,module,exports){
 'use strict';
 
-var app = require('./app');
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /*'use strict';*/
+
+//var app = require('./app');
+
+var _app = require('./app');
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 // Need a global for tags to access
 //window.app = app;
 
+var app = Object.create(_app.App);
+
 app.init();
 
-class Asdf {
-	hello() {
-		console.log('saying hello');
+var Asdf = function () {
+	function Asdf() {
+		_classCallCheck(this, Asdf);
 	}
-}
+
+	_createClass(Asdf, [{
+		key: 'hello',
+		value: function hello() {
+			console.log('saying hello');
+		}
+	}]);
+
+	return Asdf;
+}();
+
 var a = new Asdf();
 a.hello();
 
 },{"./app":1}],3:[function(require,module,exports){
+'use strict';
+
 module.exports = {
 	posts: [{
 		header: 'Hello',

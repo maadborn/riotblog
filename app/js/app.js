@@ -1,4 +1,4 @@
-'use strict';
+/*'use strict';*/
 
 var riot 			= require('riot');
 
@@ -10,21 +10,24 @@ var tempdata 		= require('./tempdata.js');
 
 console.log('entering app.js');
 
-var app = {};
+export const App = {};
 
-app.posts = [];
+App.posts = [];
 
-app.init = function() {
+App.init = function() {
 	console.log('in app.init');
 	riot.mount('blog', { posts: this.loadPosts() });
 	// riot.mount('blog-editor');
 };
 
-app.loadPosts = function() {
-	app.posts = tempdata.posts;
-	return app.posts;
+App.loadPosts = function() {
+	App.posts = tempdata.posts;
+	return App.posts;
 };
 
-module.exports = app;
-
 console.log('leaving app.js');
+
+//module.exports = app;
+// export default app
+
+//export function test() { console.log('testing'); }
