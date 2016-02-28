@@ -1,0 +1,19 @@
+{
+  "version": 3,
+  "sources": [
+    "node_modules/browser-pack/_prelude.js",
+    "app\\js\\app.js",
+    "app\\js\\boot.js",
+    "app\\js\\tempdata.js"
+  ],
+  "names": [],
+  "mappings": "AAAA;ACAA,IAAI,WAAW,QAAQ,eAAR,CAAX;;AAEJ,QAAQ,GAAR,CAAY,iBAAZ;;AAEA,IAAI,MAAM,EAAN;;AAEJ,IAAI,KAAJ,GAAY,EAAZ;;AAEA,IAAI,IAAJ,GAAW,YAAW;AACrB,MAAK,KAAL,CAAW,UAAX;;AADqB,CAAX;;AAKX,IAAI,SAAJ,GAAgB,YAAW;AAC1B,KAAI,KAAJ,GAAY,SAAS,KAAT,CADc;AAE1B,QAAO,IAAI,KAAJ,CAFmB;CAAX;;AAKhB,OAAO,OAAP,GAAiB,GAAjB;;AAEA,QAAQ,GAAR,CAAY,gBAAZ;;;;;;;AChBA,IAAI,MAAM,QAAQ,UAAR,CAAN;;AAEJ,OAAO,GAAP,GAAa,GAAb;;AAEA,IAAI,IAAJ;;;ACRA,OAAO,OAAP,GAAiB;AAChB,QAAO,CACN;AACC,UAAQ,OAAR;AACA,WAAS,qNAAT;EAHK,EAKN;AACC,UAAQ,cAAR;AACA,WAAS,wPAAT;EAPK,CAAP;CADD",
+  "file": "generated.js",
+  "sourceRoot": "",
+  "sourcesContent": [
+    "(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require==\"function\"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error(\"Cannot find module '\"+o+\"'\");throw f.code=\"MODULE_NOT_FOUND\",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require==\"function\"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})",
+    "var tempdata = require('./tempdata.js');\r\n\r\nconsole.log('entering app.js');\r\n\r\nvar app = {};\r\n\r\napp.posts = [];\r\n\r\napp.init = function() {\r\n\triot.mount('blog-app');\r\n\t// riot.mount('blog-editor');\r\n};\r\n\r\napp.loadPosts = function() {\r\n\tapp.posts = tempdata.posts;\r\n\treturn app.posts;\r\n};\r\n\r\nmodule.exports = app;\r\n\r\nconsole.log('leaving app.js');\r\n",
+    "/*requirejs(['app'], function(app) {\r\n\tapp.init();\r\n});*/\r\n\r\nvar app = require('./app.js');\r\n\r\nwindow.app = app;\r\n\r\napp.init();",
+    "module.exports = {\r\n\tposts: [\r\n\t\t{\r\n\t\t\theader: 'Hello',\r\n\t\t\tcontent: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea nemo vitae eaque, quia quod pariatur facere cum quidem, fugit in! Quidem minima necessitatibus pariatur. Optio, minus omnis? Sunt excepturi, adipisci!'\r\n\t\t},\r\n\t\t{\r\n\t\t\theader: 'Hello again!',\r\n\t\t\tcontent: 'Blanditiis laboriosam impedit quibusdam sit, dicta eaque tempore, aliquam quis incidunt. Autem accusantium recusandae, quis obcaecati eveniet inventore. Fugit explicabo obcaecati, voluptate repellat vel, asperiores deserunt facere saepe iste est.'\r\n\t\t}\r\n\t]\r\n};\r\n"
+  ]
+}

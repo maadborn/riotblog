@@ -2,16 +2,17 @@
 <html>
 <head>
 	<title>Riot blog</title>
-	<link rel="stylesheet" type="text/css" href="css/app.css">
+	<link rel="stylesheet" type="text/css" href="app/css/app.css">
 </head>
 <body>
 	<blog-app></blog-app>
 
-	<script src="tags/blog.tag" type="riot/tag"></script>
-	<script src="tags/post.tag" type="riot/tag"></script>
-	<script src="tags/blog-editor.tag" type="riot/tag"></script>
+	<script src="app/tags/blog.tag" type="riot/tag"></script>
+	<script src="app/tags/post.tag" type="riot/tag"></script>
+	<script src="app/tags/blog-editor.tag" type="riot/tag"></script>
 
 	<script src="node_modules/riot/riot+compiler.js"></script>
-	<script src="node_modules/requirejs/require.js" data-main="js/boot.js"></script>
+	<!-- <script src="node_modules/requirejs/require.js" data-main="js/boot.js"></script> -->
+	<script src="app/js/dist/bundle.js"></script>
 </body>
 </html>
