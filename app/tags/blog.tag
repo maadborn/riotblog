@@ -1,11 +1,10 @@
-<blog-app>
+<blog>
 	<h1 class="main-header">Riot blog</h1>
 	
 	<post each={ posts }>
 
 	<script>
-		/**/
-		this.posts = app.loadPosts();
+		this.posts = opts.posts; //app.loadPosts();
 	</script>
 	<style scoped>
 		:scope {
@@ -22,4 +21,4 @@
 		}
 	</style>
 	
-</blog-app>
+</blog>

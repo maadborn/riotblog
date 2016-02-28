@@ -6,8 +6,9 @@ var watchify    = require('watchify');
 var exorcist    = require('exorcist');
 var browserify  = require('browserify');
 var browserSync = require('browser-sync').create();
+var riotify     = require('riotify');
 
-// Input file.
+// Input file
 watchify.args.debug = true;
 var bundler = watchify(browserify('./app/js/boot.js', watchify.args));
 
@@ -15,6 +16,8 @@ var bundler = watchify(browserify('./app/js/boot.js', watchify.args));
 bundler.transform(babelify.configure({
     sourceMapRelative: 'app/js'
 }));
+
+bundler.transform(riotify);
 
 // On updates recompile
 bundler.on('update', bundle);

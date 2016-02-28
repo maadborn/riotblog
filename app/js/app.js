@@ -1,4 +1,12 @@
-var tempdata = require('./tempdata.js');
+'use strict';
+
+var riot 			= require('riot');
+
+var blogTag 		= require('../tags/blog.tag');
+var blogEditorTag 	= require('../tags/blog-editor.tag');
+var postTag 		= require('../tags/post.tag');
+
+var tempdata 		= require('./tempdata.js');
 
 console.log('entering app.js');
 
@@ -7,7 +15,8 @@ var app = {};
 app.posts = [];
 
 app.init = function() {
-	riot.mount('blog-app');
+	console.log('in app.init');
+	riot.mount('blog', { posts: this.loadPosts() });
 	// riot.mount('blog-editor');
 };
 
