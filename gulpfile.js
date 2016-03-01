@@ -24,7 +24,6 @@ bundler.transform(riotify);
 bundler.on('update', bundle);
 
 function bundle() {
-
     gutil.log('Compiling JS...');
 
     return bundler.bundle()
