@@ -74,3 +74,4 @@ $RECYCLE.BIN/
 # sftp configuration file
 sftp-config.json
 
+*.sublime-project
