@@ -12,10 +12,10 @@ let app = Object.create(App);
 app.init();
 
 
-
+/*
 
 class Asdf { 
 	hello() { console.log('saying hello'); }
 }
 var a = new Asdf();
-a.hello();
+a.hello();*/
