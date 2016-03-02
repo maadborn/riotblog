@@ -26,16 +26,6 @@ var paths = {
     }
 };
 
-// var scriptsEntry = './src/scripts/boot.js';
-// var sourceMapDest = './dist/scripts/bundle.js.map';
-// var bundleDest = './dist/scripts';
-
-// var stylesSrc = ['./src/styles/*.css'];
-// var stylesDest = './dist/styles';
-
-// var htmlSrc = './src/*.html';
-// var htmlDest = './dist';
-
 // Bundle with options on entry file
 watchify.args.debug = true;
 var bundler = watchify(browserify(paths.scripts.bundleEntry, watchify.args));
