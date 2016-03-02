@@ -1,33 +1,21 @@
-/*'use strict';*/
 
-var riot 			= require('riot');
+import riot 		from 'riot';
+import tempdata 	from './tempdata';
+import blogTag 		from '../tags/blog.tag';
+import editorTag 	from '../tags/blog-editor.tag';
+import postTag 		from '../tags/post.tag';
 
-var blogTag 		= require('../tags/blog.tag');
-var blogEditorTag 	= require('../tags/blog-editor.tag');
-var postTag 		= require('../tags/post.tag');
+export default {
 
-var tempdata 		= require('./tempdata.js');
+	posts: [],
 
-console.log('entering app.js');
+	init() {
+		riot.mount('blog', { posts: this.loadPosts() });
+	},
 
-export const App = {};
+	loadPosts() {
+		this.posts = tempdata.posts;
+		return this.posts;
+	}
 
-App.posts = [];
-
-App.init = function() {
-	console.log('in app.init');
-	riot.mount('blog', { posts: this.loadPosts() });
-	// riot.mount('blog-editor');
 };
-
-App.loadPosts = function() {
-	App.posts = tempdata.posts;
-	return App.posts;
-};
-
-console.log('leaving app.js');
-
-//module.exports = app;
-// export default app
-
-//export function test() { console.log('testing'); }

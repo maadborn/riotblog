@@ -9,19 +9,36 @@ var browserSync = require('browser-sync').create();
 var riotify     = require('riotify');
 var changed     = require('gulp-changed');
 
-var scriptsEntry = './src/scripts/boot.js';
-var sourceMapDest = './dist/scripts/bundle.js.map';
-var bundleDest = './dist/scripts';
+// Paths object
+var paths = {
+    scripts: {
+        bundleEntry: './src/scripts/boot.js',
+        bundleDest: './dist/scripts',
+        sourceMapDest: './dist/scripts/bundle.js.map'
+    },
+    styles: {
+        src: './src/styles/*.css',
+        dest: './dist/styles'
+    },
+    html: {
+        src: './src/*.html',
+        dest: './dist'
+    }
+};
 
-var stylesSrc = ['./src/styles/*.css'];
-var stylesDest = './dist/styles';
+// var scriptsEntry = './src/scripts/boot.js';
+// var sourceMapDest = './dist/scripts/bundle.js.map';
+// var bundleDest = './dist/scripts';
 
-var htmlSrc = './src/*.html';
-var htmlDest = './dist';
+// var stylesSrc = ['./src/styles/*.css'];
+// var stylesDest = './dist/styles';
 
-// Input file
+// var htmlSrc = './src/*.html';
+// var htmlDest = './dist';
+
+// Bundle with options on entry file
 watchify.args.debug = true;
-var bundler = watchify(browserify(scriptsEntry, watchify.args));
+var bundler = watchify(browserify(paths.scripts.bundleEntry, watchify.args));
 
 // Babel transform
 bundler.transform(babelify.configure({
@@ -29,9 +46,10 @@ bundler.transform(babelify.configure({
     presets: ['es2015']
 }));
 
+// Riot transform
 bundler.transform(riotify);
 
-// On updates recompile
+// Recompile scripts on updates
 bundler.on('update', bundle);
 
 function bundle() {
@@ -43,38 +61,40 @@ function bundle() {
             browserSync.notify("Browserify Error!");
             this.emit("end");
         })
-        .pipe(exorcist(sourceMapDest))
+        .pipe(exorcist(paths.scripts.sourceMapDest))
         .pipe(source('bundle.js'))
-        .pipe(gulp.dest(bundleDest))
+        .pipe(gulp.dest(paths.scripts.bundleDest))
         .pipe(browserSync.stream({once: true}));
 }
 
-/**
- * Gulp task alias
- */
+// Bundle task
 gulp.task('bundle', function () {
     return bundle();
 });
 
+// Styles transformation task TODO
 gulp.task('styles', function() {
-    return gulp.src(stylesSrc)
+    return gulp.src(paths.styles.src)
         //concat, autoprefix, minify
-        .pipe(gulp.dest(stylesDest));
+        .pipe(gulp.dest(paths.styles.dest));
 });
 
+// Html move task
 gulp.task('html', function() {
-    return gulp.src(htmlSrc)
-        .pipe(changed(htmlDest))
-        .pipe(gulp.dest(htmlDest));
+    return gulp.src(paths.html.src)
+        // minify?
+        .pipe(changed(paths.html.dest))
+        .pipe(gulp.dest(paths.html.dest));
 });
 
 /**
- * First bundle, then serve from the ./app directory
+ * Bundle, transform and move files for distribution,
+ * then serve from the ./dist directory
  */
 gulp.task('default', ['bundle', 'styles', 'html'], function () {
-    gulp.watch(htmlSrc, ['html']);
+    gulp.watch(paths.html.src, ['html']);
 
-    gulp.watch(stylesSrc, ['styles']);
+    gulp.watch(paths.styles.src, ['styles']);
 
     browserSync.init({
         server: "./dist"
