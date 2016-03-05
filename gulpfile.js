@@ -26,62 +26,40 @@ var paths = {
     }
 };
 
-var bundleFactory = {
-    
-    getWatchifyBundle: function() {
-        // Bundle with options on entry file
-        watchify.args.debug = true;
-        var bundler = watchify(browserify(paths.scripts.bundleEntry, watchify.args));
+// Bundle with options on entry file
+watchify.args.debug = true;
+var bundler = watchify(browserify(paths.scripts.bundleEntry, watchify.args));
 
-        this._transformBundle(bundler);
+// Babel transform
+bundler.transform(babelify.configure({
+    /*sourceMapRelative: 'app/js',*/
+    presets: ['es2015']
+}));
 
-        // Recompile scripts on updates
-        bundler.on('update', this._bundle.bind(this, bundler));
+// Riot transform
+bundler.transform(riotify);
 
-        return this._bundle(bundler);
-    },
+// Recompile scripts on updates
+bundler.on('update', bundle);
 
+function bundle() {
+    gutil.log('Compiling JS...');
 
-    /*function getBrowserifyBundle() {
-
-    }*/
-    
-    _transformBundle: function(_bundler) {
-        // Babel transform
-        _bundler.transform(babelify.configure({
-            /*sourceMapRelative: 'app/js',*/
-            presets: ['es2015']
-        }));
-
-        // Riot transform
-        _bundler.transform(riotify);
-    },
-    
-    _bundle: function(_bundler) {
-        gutil.log('Compiling JS...');
-
-        return _bundler.bundle()
-            .on('error', function (err) {
-                gutil.log(err.message);
-                browserSync.notify("Browserify Error!");
-                this.emit("end");
-            })
-            .pipe(exorcist(paths.scripts.sourceMapDest))
-            .pipe(source('bundle.js'))
-            .pipe(gulp.dest(paths.scripts.bundleDest))
-            .pipe(browserSync.stream({once: true}));
-    }
-};
-
-
-
-
-//var buildBundler = browserify(paths.scripts.bundleEntry, watchify.args);
+    return bundler.bundle()
+        .on('error', function (err) {
+            gutil.log(err.message);
+            browserSync.notify("Browserify Error!");
+            this.emit("end");
+        })
+        .pipe(exorcist(paths.scripts.sourceMapDest))
+        .pipe(source('bundle.js'))
+        .pipe(gulp.dest(paths.scripts.bundleDest))
+        .pipe(browserSync.stream({once: true}));
+}
 
 // Bundle task
 gulp.task('bundle', function () {
-    // return bundle();
-    return bundleFactory.getWatchifyBundle();
+    return bundle();
 });
 
 // Styles transformation task TODO
@@ -99,16 +77,11 @@ gulp.task('html', function() {
         .pipe(gulp.dest(paths.html.dest));
 });
 
-// Build task
-gulp.task('build', ['bundle', 'styles', 'html'], function() {
-    
-});
-
 /**
  * Bundle, transform and move files for distribution,
  * then serve from the ./dist directory
  */
-gulp.task('default', ['build'], function () {
+gulp.task('default', ['bundle', 'styles', 'html'], function () {
     gulp.watch(paths.html.src, ['html']);
 
     gulp.watch(paths.styles.src, ['styles']);
