@@ -1,65 +1,83 @@
+'use strict';
+
 var gulp        = require('gulp');
 var gutil       = require('gulp-util');
 var source      = require('vinyl-source-stream');
+var buffer      = require('vinyl-buffer');
 var babelify    = require('babelify');
 var watchify    = require('watchify');
-var exorcist    = require('exorcist');
 var browserify  = require('browserify');
-var browserSync = require('browser-sync').create();
+var browserSync = require('browser-sync');
+var sourcemaps  = require('gulp-sourcemaps');
 var riotify     = require('riotify');
 var changed     = require('gulp-changed');
+var del         = require('del');
 
 // Paths object
 var paths = {
     scripts: {
         bundleEntry: './src/scripts/boot.js',
         bundleDest: './dist/scripts',
-        sourceMapDest: './dist/scripts/bundle.js.map'
+        bundleFilename: 'bundle.js',
+        sourceMapDest: './dist/scripts/bundle.js.map',
+        sourceMapFilename: 'bundle.js.map'
     },
     styles: {
         src: './src/styles/*.css',
-        dest: './dist/styles'
+        dest: './dist/styles',
+        distGlob: './dist/**/*.css'
     },
     html: {
         src: './src/*.html',
-        dest: './dist'
-    }
+        dest: './dist',
+        distGlob: './dist/**/*.html'
+    },
+    clean: './dist/**'
 };
 
-// Bundle with options on entry file
-watchify.args.debug = true;
-var bundler = watchify(browserify(paths.scripts.bundleEntry, watchify.args));
+// Prepare scripts for package/distribution/browser
+function compile(watch) {
+    var bundler = browserify(paths.scripts.bundleEntry, { debug: true })
+        .transform(babelify.configure({ presets: ['es2015'] }))
+        .transform(riotify);
 
-// Babel transform
-bundler.transform(babelify.configure({
-    /*sourceMapRelative: 'app/js',*/
-    presets: ['es2015']
-}));
+    var watcher = watch ? watchify(bundler) : '';
 
-// Riot transform
-bundler.transform(riotify);
+    if (watch) {
+        watcher.on('update', function () {
+            gutil.log('Bundling...');
+            rebundle()
+                .pipe(browserSync.stream({ once: true }));
+        });
+    }
 
-// Recompile scripts on updates
-bundler.on('update', bundle);
+    return rebundle();
 
-function bundle() {
-    gutil.log('Compiling JS...');
-
-    return bundler.bundle()
-        .on('error', function (err) {
-            gutil.log(err.message);
-            browserSync.notify("Browserify Error!");
-            this.emit("end");
-        })
-        .pipe(exorcist(paths.scripts.sourceMapDest))
-        .pipe(source('bundle.js'))
-        .pipe(gulp.dest(paths.scripts.bundleDest))
-        .pipe(browserSync.stream({once: true}));
+    function rebundle() {
+        return bundler.bundle()
+            .on('error', function(err) { 
+                gutil.log(err); 
+                browserSync.notify("Browserify error!");
+                this.emit('end'); 
+            })
+            .pipe(source(paths.scripts.bundleFilename))
+            .pipe(buffer())
+            .pipe(sourcemaps.init({ loadMaps: true }))
+            .pipe(sourcemaps.write('./'))
+            .pipe(gulp.dest(paths.scripts.bundleDest));
+    }
 }
 
-// Bundle task
-gulp.task('bundle', function () {
-    return bundle();
+function watch() {
+    return compile(true);
+};
+
+
+/*** TASKS ***/
+
+// Clean built distribution files == delete dist directory
+gulp.task('clean', function() {
+    del(paths.clean);
 });
 
 // Styles transformation task TODO
@@ -77,16 +95,30 @@ gulp.task('html', function() {
         .pipe(gulp.dest(paths.html.dest));
 });
 
-/**
- * Bundle, transform and move files for distribution,
- * then serve from the ./dist directory
- */
-gulp.task('default', ['bundle', 'styles', 'html'], function () {
+// Build for distrution
+gulp.task('build', ['styles', 'html'], function () { 
+    return compile(); 
+});
+
+// Watch sources for development
+gulp.task('watch', ['styles', 'html'], function () {  
     gulp.watch(paths.html.src, ['html']);
-
     gulp.watch(paths.styles.src, ['styles']);
+    return watch(); 
+});
 
+// BrowserSync task 
+gulp.task('browserSync', ['watch'], function () {
+    gutil.log('Starting BrowserSync...');
     browserSync.init({
-        server: "./dist"
+        files: [paths.html.distGlob, paths.styles.distGlob],
+        server: { 
+            baseDir: "./dist"
+        },
+        open: false
     });
 });
+
+// Bundle, transform and move files for distribution, then serve from the ./dist directory
+ 
+gulp.task('default', ['browserSync']);

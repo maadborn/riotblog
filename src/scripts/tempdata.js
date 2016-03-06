@@ -1,4 +1,5 @@
-module.exports = {
+//var tempdata = {
+export default {
 	posts: [
 		{
 			header: 'Hello',
@@ -10,3 +11,6 @@ module.exports = {
 		}
 	]
 };
+
+// module.exports = tempdata;
+//export { tempdata };
