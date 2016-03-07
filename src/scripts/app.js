@@ -1,7 +1,9 @@
 
 import riot 		from 'riot';
 import tempdata		from './tempdata';
+
 import blogTag 		from '../tags/blog.tag';
+import navTag 		from '../tags/blog-nav.tag';
 import editorTag 	from '../tags/blog-editor.tag';
 import postTag 		from '../tags/post.tag';
 

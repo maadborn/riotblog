@@ -1,8 +1,25 @@
 html {
 	background-color: #ddd;
 	font-family: Arial, Helvetica, sans-serif;
+	color: #222;
 }
 
 body {
 	margin: 0;
+	width: 100%;
 }
+
+.test {
+	list-style: none;
+}
+
+a {
+	color: #222;
+	text-decoration: none;
+}
+	
+	a:hover {
+		color: #163;
+		text-shadow: 0 0 3px #3dd;
+	}
+
