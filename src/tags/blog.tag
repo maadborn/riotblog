@@ -6,15 +6,16 @@
 
 	<!-- posts should be yielded here as a view.. lookup the riot router -->
 	
-	<div class="content">
-		<post each={ posts }></post>
+	<div id="content" class="content">
+		<posts></posts>
+		<!-- <post each={ posts }></post> -->
 	</div>
 
 	<footer></footer>
 
-	<script >
-		this.posts = opts.posts;
-
+	<script>
+		// this.posts = opts.posts;
+		console.log('Blog!');
 		this.sayHello = function() {
 			var message = 'hi!';
 			console.log(message);

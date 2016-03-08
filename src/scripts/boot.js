@@ -1,5 +1,5 @@
 
-import App from './app' // Import default
+import App from './app'; // Import default
 
 const app = Object.create(App);
 
