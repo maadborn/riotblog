@@ -1,6 +1,6 @@
 <about>
 	<span>Hello!</span>
 	<script>
-		console.log('Abuot!!');
+		console.log('About!!');
 	</script>
 </about>

@@ -1,6 +1,5 @@
-import riot 	from 'riot';
-import tempdata	from './tempdata';
-
+import riot			from 'riot';
+import dataAccess 	from './dataaccess';
 
 export default {
 	contentSelector: null,
@@ -15,23 +14,19 @@ export default {
 		});
 
 		riot.route('/home', () => {
-			riot.mount(this.getContentMountPoint(), 'posts', { 
-				posts: this.loadPosts()
+			riot.mount(this.contentMountPoint, 'posts', { 
+				posts: dataAccess.posts
 			});
 		});
 
 		riot.route('/about', () => {
-			riot.mount(this.getContentMountPoint(), 'about');
+			riot.mount(this.contentMountPoint, 'about');
 		});
 
 		riot.route.start(true);
 	},
 
-	getContentMountPoint() {
+	get contentMountPoint() {
 		return document.getElementById(this.contentSelector);
-	},
-
-	loadPosts() {
-		return tempdata.posts;
 	}
 }

@@ -6,7 +6,7 @@ A: Make sure you include the riot+compiler.js file. I had included the ``riot.js
 
 #### Q: Tried a simple databinding example, but nothing happens when I push the button ####
 
-A: I had named my function ``update``, which is also a function in Riot that updates the markup section from the script section. Just renamed it to ``go`` and everything started working!
+A: I had named my function ``update``, which is also a function in Riot that updates the markup section from the script section (see [Riot's reserved words](http://riotjs.com/api/#reserved-words)). Just renamed it to ``go`` and everything started working.
 
 #### Q: Just having set up Browserify, bundle task is working fine but default task is failing due to the starting point for the relative paths being different. ####
 

@@ -3,17 +3,18 @@
 		<ul>
 			<li><a href="#home">Home</a></li>
 			<li><a href="#about">About</a></li>
-			<li><a href="#contact">Contact</a></li>
+			<li class="right"><a href="#" onclick="{ showLoginBox }">Login</a></li>
 		</ul>
+		<loginbox name="loginbox" hidden />
 	</nav>
 
 	<script>
-		console.log('Blognav!');
-	// onclick="{ routeHome }"
-		// this.routeHome = function(event) {
-		// 	debugger;
-		// 	riot.route('/home');
-		// };
+		this.showLoginBox = function(event) {
+			// TODO add toggle
+			// debugger;
+			// this.loginbox
+			return false;
+		};
 	</script>
 
 	<style scoped>
@@ -22,6 +23,7 @@
 			margin: 0;
 			padding: 0;
 			display: block;
+			position: relative;
 			background-color: #28c;
 		}
 
@@ -39,6 +41,11 @@
 		a:hover {
 			color: white;
 			background-color: #17b;
+		}
+
+		.right {
+			position: absolute;
+			right: 0;
 		}
 
 	</style>

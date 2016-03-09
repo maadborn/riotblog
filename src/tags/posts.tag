@@ -1,8 +1,14 @@
 <posts>
+	
 	<post each={ posts }></post>
 
 	<script>
-		console.log('Posts!');
+
 		this.posts = opts.posts;
+
+		this.posts.on('fetched', function() {
+			this.update();
+		}.bind(this));
+
 	</script>
 </posts>
