@@ -1,7 +1,8 @@
 html {
-	background-color: #ddd;
+	background-color: #e0e0e0;
 	font-family: Arial, Helvetica, sans-serif;
 	color: #222;
+	font-size: 1em;
 }
 
 body {
@@ -16,10 +17,30 @@ body {
 a {
 	color: #222;
 	text-decoration: none;
+	background-color: #AFDAFD;
+	padding: 2px;
 }
 	
 	a:hover {
-		color: #163;
-		text-shadow: 0 0 3px #ccc; /* #3dd; */
+/*		color: #163;
+		text-shadow: 0 0 1px #eee;*/
+		background-color: #7FC9FF;
+		/*color: white;*/
 	}
 
+button {
+	color: #eee;
+	background-color: #17B;
+	border: none;
+	padding: 0.5em;
+}
+
+	button:hover {
+		background-color: #0E679E;
+		transition: background-color ease-in 0.2s;
+	}
+
+input {
+	padding: 2px;
+	font-size: 0.9em;
+}

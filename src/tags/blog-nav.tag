@@ -5,19 +5,25 @@
 			<li><a href="#about">About</a></li>
 			<li class="right"><a href="#" onclick="{ showLoginBox }">Login</a></li>
 		</ul>
-		<loginbox name="loginbox" hidden />
+		<loginbox name="loginbox" hide="{ true }" />
 	</nav>
 
 	<script>
+		// this.on('mount', function() {
+		// 	this.tags.loginbox.toggle();
+		// });
+
 		this.showLoginBox = function(event) {
-			// TODO add toggle
-			// debugger;
-			// this.loginbox
+			this.tags.loginbox.toggle();
 			return false;
 		};
 	</script>
 
 	<style scoped>
+		nav {
+			position: relative;
+		}
+
 		ul {
 			list-style: none;
 			margin: 0;
@@ -36,6 +42,7 @@
 			padding: 15px;
 			color: white;
 			display: inline-block;
+			background-color: #28c;
 		}
 
 		a:hover {

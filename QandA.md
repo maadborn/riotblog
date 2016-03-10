@@ -61,6 +61,10 @@ If ``foo`` is the default export of the module, you could do:
 	// import.js - ES2015 modules with default
 	import foo from './export';
 
+#### Q: Reserved words... I named a custom attribute ``hide`` and passed ``{ true } `` into it as part of a nested custom tag. And guess what happened?  ####
+
+A: Yup, it disappeared. I accidently stumbled onto a reserved attribute name, which in this case was quite fantastic. Good job, Riot team, using intuitive naming and good util attributes. Just be aware that you might as well give some custom attribute or script member the same name as a reserved word and hit some unwanted behavior that might be a bit tricky to track down.
+
 ---
 
 #### Q: ####

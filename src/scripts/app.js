@@ -3,6 +3,7 @@ import riot 		from 'riot';
 import Router		from './router';
 import tempdata		from './tempdata';
 
+import rawTag		from '../tags/raw.tag';
 import aboutTag		from '../tags/about.tag';
 import blogTag 		from '../tags/blog.tag';
 import navTag 		from '../tags/blog-nav.tag';

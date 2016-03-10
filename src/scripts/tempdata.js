@@ -3,7 +3,7 @@ export default {
 	posts: [
 		{
 			header: 'Hello',
-			content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea nemo vitae eaque, quia quod pariatur facere cum quidem, fugit in! Quidem minima necessitatibus pariatur. Optio, minus omnis? Sunt excepturi, adipisci!'
+			content: 'Lorem <a href="">ipsum</a> dolor sit amet, consectetur adipisicing elit. Ea nemo vitae eaque, quia quod pariatur facere cum quidem, fugit in! Quidem minima necessitatibus pariatur. Optio, minus omnis? Sunt excepturi, adipisci!'
 		},
 		{
 			header: 'Hello again!',
