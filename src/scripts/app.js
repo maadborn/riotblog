@@ -1,4 +1,3 @@
-
 import riot 		from 'riot';
 import Router		from './router';
 import tempdata		from './tempdata';

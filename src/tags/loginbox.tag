@@ -1,6 +1,6 @@
 <loginbox>
 	<span></span>
-	<span class="close" onclick="{ toggle }" title="Close">×</span>
+	<button type="button" class="close" onclick="{ close }" title="Close">×</button>
 	<form name="loginform" class="loginform" onsubmit="{ submit }">
 		<input name="username" type="text" placeholder="User"></input>
 		<input name="password" type="text" placeholder="Password"></input>
@@ -8,25 +8,54 @@
 	</form>
 
 	<script>
+        
 		this.toggle = function() {
-			this.root.style.display = (this.root.style.display == 'none') ? '' : 'none';
+            if (this.isOpen()) {
+                this.close();
+            } else {
+                this.open();
+            }
 		};
 
 		this.submit = function(a,b,c) {
-			debugger
+			debugger;
 			console.log('submit');
 		};
+        
+        this.isOpen = function() {
+            return (this.root.style.display != 'none');
+        };
+        
+        this.open = function() {
+            this.root.style.display = '';
+            setTimeout(function() { document.addEventListener('click', hideBox); }, 0);
+        };
+        
+        this.close = function() {
+            document.removeEventListener('click', hideBox);
+            this.root.style.display = 'none';
+        };
+        
+        var box = this;
+        function hideBox(event) {
+            if (box.isOpen()) {
+                if (event.path.every((function(node) { return node != box.root; })) ) {
+                    box.close();
+                }
+            }
+        }
+        
 	</script>
 
 	<style scoped>
-
 		:scope {
 			display: block;
 			position: absolute;
 			right: 0;
-			width: 200px;
+			width: 300px;
 			/*height: 200px;*/
 			background-color: #28c;
+            border: 2px solid #39d;
 		}
 
 		@media (max-width: 700px) {
@@ -35,22 +64,14 @@
 			}
 		}
 
-
 		.close {
-			display: block;
-			color: white;
-			font-size: 1em;
+            /*display: block;*/
 			font-weight: bold;
-			line-height: 1.2em;
-			height: 1.2em;
-			width: 1.2em;
-			background-color: #17b;
-			/*border-radius: 1em;*/
-			cursor: pointer;
-			text-align: center;
 		    position: absolute;
 		    right: 0;
 		    margin: 0.5em;
+			height: 1.5em;
+			line-height: 0.7em;
 		}
 
 		.loginform {
@@ -58,8 +79,17 @@
 		}
 
 		.loginform input[type=text] {
-			width: 80%;
-			margin-bottom: 0.5em;
+			width: 60%;
+			margin-bottom: 0.6em;
 		}
+        
+        .loginform button[type=submit] {
+            position: absolute;
+            height: 70%;
+            width: 20%;
+            display: block;
+            left: 65%;
+            top: 10%;
+        }
 	</style>
 </loginbox>
