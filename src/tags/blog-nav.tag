@@ -3,7 +3,7 @@
 		<ul>
 			<li><a href="#home">Home</a></li>
 			<li><a href="#about">About</a></li>
-			<li class="right"><a href="#" onclick="{ showLoginBox }">Login</a></li>
+			<li class="right"><a href="#" onclick="{ toggleLoginBox }">Login</a></li>
 		</ul>
 		<loginbox name="loginbox" hide="{ true }" />
 	</nav>
@@ -13,7 +13,7 @@
 		// 	this.tags.loginbox.toggle();
 		// });
 
-		this.showLoginBox = function(event) {
+		this.toggleLoginBox = function(event) {
 			this.tags.loginbox.toggle();
 			return false;
 		};

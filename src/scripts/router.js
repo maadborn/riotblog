@@ -1,12 +1,10 @@
 import riot			from 'riot';
-import dataAccess 	from './dataaccess';
+import dataService 	from './dataservice';
 
 export default {
 	contentSelector: null,
 
 	init(contentSelector) {
-		console.log('init router');
-
 		this.contentSelector = contentSelector;
 
 		riot.route('/', () => {
@@ -14,8 +12,8 @@ export default {
 		});
 
 		riot.route('/home', () => {
-			riot.mount(this.contentMountPoint, 'posts', { 
-				posts: dataAccess.posts
+			riot.mount(this.contentMountPoint, 'posts', {
+				posts: dataService.posts
 			});
 		});
 
@@ -29,4 +27,4 @@ export default {
 	get contentMountPoint() {
 		return document.getElementById(this.contentSelector);
 	}
-}
+};

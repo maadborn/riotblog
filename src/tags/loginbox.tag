@@ -18,7 +18,6 @@
 		};
 
 		this.submit = function(a,b,c) {
-			debugger;
 			console.log('submit');
 		};
         
@@ -28,11 +27,11 @@
         
         this.open = function() {
             this.root.style.display = '';
-            setTimeout(function() { document.addEventListener('click', hideBox); }, 0);
+            //setTimeout(function() { document.addEventListener('click', hideBox); }, 0);
         };
         
         this.close = function() {
-            document.removeEventListener('click', hideBox);
+            // document.removeEventListener('click', hideBox);
             this.root.style.display = 'none';
         };
         

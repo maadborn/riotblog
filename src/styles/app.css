@@ -43,4 +43,5 @@ button {
 input {
 	padding: 2px;
 	font-size: 0.9em;
+    border: 1px solid #eee;
 }

@@ -1,4 +1,3 @@
-//var tempdata = {
 export default {
 	posts: [
 		{
@@ -11,6 +10,3 @@ export default {
 		}
 	]
 };
-
-// module.exports = tempdata;
-//export { tempdata };
