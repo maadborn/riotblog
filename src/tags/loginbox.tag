@@ -8,17 +8,13 @@
 	</form>
 
 	<script>
-        
+		
 		this.toggle = function() {
             if (this.isOpen()) {
                 this.close();
             } else {
                 this.open();
             }
-		};
-
-		this.submit = function(a,b,c) {
-			console.log('submit');
 		};
         
         this.isOpen = function() {
@@ -27,22 +23,17 @@
         
         this.open = function() {
             this.root.style.display = '';
-            //setTimeout(function() { document.addEventListener('click', hideBox); }, 0);
         };
         
         this.close = function() {
-            // document.removeEventListener('click', hideBox);
             this.root.style.display = 'none';
         };
-        
-        var box = this;
-        function hideBox(event) {
-            if (box.isOpen()) {
-                if (event.path.every((function(node) { return node != box.root; })) ) {
-                    box.close();
-                }
-            }
-        }
+
+		this.submit = function(a,b,c) {
+			console.log('submit');
+		};
+		
+		app.eventBus.on('elem:loginbox:toggle', this.toggle.bind(this));
         
 	</script>
 
@@ -54,7 +45,7 @@
 			width: 300px;
 			/*height: 200px;*/
 			background-color: #28c;
-            border: 2px solid #39d;
+            /*border: 2px solid #39d;*/
 		}
 
 		@media (max-width: 700px) {

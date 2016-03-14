@@ -16,10 +16,10 @@ export default {
 	router: null,
 	eventBus: EventBus,
 	init() {
-		this.router = Object.create(Router);
+		this.router = Router; // Object.create(Router);
 		// string passed in here is the id of the element in which content should be loaded
 		this.router.init('content');
 
 		riot.mount('blog');
-	},
+	}
 };

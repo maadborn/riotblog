@@ -1,7 +1,7 @@
 import App from './app';     // Import default
 
-const app = Object.create(App);
-
-app.init();
+const app = App; // Object.create(App);
 
 window.app = app;
+
+app.init();

@@ -3,18 +3,15 @@
 		<ul>
 			<li><a href="#home">Home</a></li>
 			<li><a href="#about">About</a></li>
-			<li class="right"><a href="#" onclick="{ toggleLoginBox }">Login</a></li>
+			<li class="right"><a href="#login" onclick="{ toggleLoginBox }">Login</a></li>
 		</ul>
 		<loginbox name="loginbox" hide="{ true }" />
 	</nav>
 
 	<script>
-		// this.on('mount', function() {
-		// 	this.tags.loginbox.toggle();
-		// });
-
 		this.toggleLoginBox = function(event) {
-			this.tags.loginbox.toggle();
+			//this.tags.loginbox.toggle();
+			app.eventBus.trigger('elem:loginbox:toggle');
 			return false;
 		};
 	</script>
@@ -45,7 +42,8 @@
 			background-color: #28c;
 		}
 
-		a:hover {
+		a:hover,
+		.active {
 			color: white;
 			background-color: #17b;
 		}
@@ -54,6 +52,5 @@
 			position: absolute;
 			right: 0;
 		}
-
 	</style>
 </blognav>
