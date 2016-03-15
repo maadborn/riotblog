@@ -12,13 +12,13 @@ export default {
 		});
 
 		riot.route('/home', () => {
-			riot.mount(this.contentMountPoint, 'posts', {
+			riot.mount(this.contentMountPoint, 'blog-posts', {
 				posts: dataService.posts
 			});
 		});
 
 		riot.route('/about', () => {
-			riot.mount(this.contentMountPoint, 'about');
+			riot.mount(this.contentMountPoint, 'blog-about');
 		});
 
 		riot.route.start(true);

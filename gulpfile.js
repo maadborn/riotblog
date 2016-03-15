@@ -39,8 +39,8 @@ var paths = {
 function compile(watch) {
     var bundler = browserify(paths.scripts.bundleEntry, { debug: true })
         .transform(babelify.configure({ presets: ['es2015'] }))
-        .transform(riotify);
-
+        .transform(riotify, { ext: '.tag.html' });
+	
     var watcher = watch ? watchify(bundler) : '';
 
     if (watch) {
@@ -56,8 +56,8 @@ function compile(watch) {
     function rebundle() {
         return bundler.bundle()
             .on('error', function(err) { 
-                gutil.log("Bundle error: " + err.message); 
-                browserSync.notify("Browserify error!");
+				gutil.log('Bundle error: ' + err.message + '\n' + err);  
+                browserSync.notify('Browserify error!');
                 this.emit('end'); 
             })
             .pipe(source(paths.scripts.bundleFilename))
@@ -113,7 +113,7 @@ gulp.task('browserSync', ['watch'], function () {
     browserSync.init({
         files: [paths.html.distGlob, paths.styles.distGlob],
         server: { 
-            baseDir: "./dist"
+            baseDir: './dist'
         },
         open: false
     });

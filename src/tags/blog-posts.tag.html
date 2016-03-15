@@ -1,0 +1,13 @@
+<blog-posts>
+	<blog-post each={ posts }></blog-post>
+
+	<script>
+		this.posts = opts.posts;
+		
+		console.log('start listening for posts update');
+		app.eventBus.on('data:posts:updated', function() {
+			console.log('heard posts update');
+			this.update();
+		}.bind(this));
+	</script>
+</blog-posts>

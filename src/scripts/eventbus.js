@@ -1,4 +1,3 @@
 import riot from 'riot';
 
-export default riot.observable({
-});
+export default riot.observable({});
