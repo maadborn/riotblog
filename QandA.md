@@ -6,7 +6,7 @@ A: Make sure you include the riot+compiler.js file. I had included the ``riot.js
 
 #### Q: Tried a simple databinding example, but nothing happens when I push the button ####
 
-A: I had named my function ``update``, which is also a function in Riot that updates the markup section from the script section (see [Riot's reserved words](http://riotjs.com/api/#reserved-words)). Just renamed it to ``go`` and everything started working.
+A: I had named my function ```update```, which is also a function in Riot that updates the markup section from the script section (see [Riot's reserved words](http://riotjs.com/api/#reserved-words)). Just renamed it to ``go`` and everything started working.
 
 #### Q: Just having set up Browserify, bundle task is working fine but default task is failing due to the starting point for the relative paths being different. ####
 
@@ -69,11 +69,55 @@ On another note concerning imports: make sure to use the _exactly_ same name whe
 	// file2.js
 	import foo from './myModule'; 
 
-While the following will work and almost look the same, the ``foo`` in file1 and ``foo`` in file2 will refer to different instances of ``mymodule``. This might not be an issue, but if you rely on them being used as a singleton, you will want to make sure to get the module name casing right in all occurances. This is why I recommend using lower case on all file names just to make it easier to remember how the module import should be written. Module imports are cached, so using different strings will probably result in different cache keys in the transpiled CommonJS code.  
+While the following will work and almost look the same, the ```foo``` in file1 and ```foo``` in file2 will refer to different instances of ```mymodule```. This might not be an issue, but if you rely on them being used as a singleton, you will want to make sure to get the module name casing right in all occurances. This is why I recommend using lower case on all file names just to make it easier to remember how the module import should be written. Module imports are cached, so using different strings will probably result in different cache keys in the transpiled CommonJS code.  
 
-#### Q: Reserved words... I named a custom attribute ``hide`` and passed ``{ true } `` into it as part of a nested custom tag. And guess what happened?  ####
+#### Q: Reserved words... I named a custom attribute ```hide``` and passed ```{ true }``` into it as part of a nested custom tag. And guess what happened?  ####
 
 A: Yup, it disappeared. I accidently stumbled onto a reserved attribute name, which in this case was quite fantastic. Good job, Riot team, using intuitive naming and good util attributes. Just be aware that you might as well give some custom attribute or script member the same name as a reserved word and hit some unwanted behavior that might be a bit tricky to track down.
+
+#### Q: There seems to be some quirks to how child tags in each loops are being constructed. Any hints? ####
+
+A: Each loops can be declared in more than one way, for example:
+
+	<my-tag each="{ foos }"><my-tag />
+	<my-tag each="{ foo in foos }"><my-tag />
+
+The difference might seem cosmetic, especially if ```my-tag``` is declared elsewhere. But in reality, you will end up with different results.
+
+In the first case, ```this``` inside ```my-tag``` will be bound to the currently looped item. When the tag is constructed, the loop item ```this``` will be merged with the tag instance, which might seem appealing at a first glance. But if you try to do:
+
+	<my-tag>
+		<span>{ foo }</span>
+
+		<script>
+			var tag = this;
+			tag.foo = opts.foo;
+		</script>
+	</my-tag>
+
+When we reach the first line in the script element, ```this``` will already have the ```foo``` property (assuming ```foo``` has such) and ```opts``` will be an empty object. So the second line will actually overwrite the value with ```undefined```. 
+
+We could modify our code by deleting ```tag.foo = opts.foo;```, but then we are just pushing the problem to another place, as we have made our tag fit this specific situation and not caring about its general usability by removing the way to pass data via ```opts```.
+
+In the second case, ```this``` inside ```my-tag``` will be our tag instance with an additional property called ``foo``, from ``foo in foos``. This is slightly better in my opinion, but we still don't have any real way of passing data and being general in our use of the tag.
+
+So the solution I find most usable is:
+
+	<my-tag each="{ foo in foos }" foo="{ foo }"><my-tag />
+
+Which in non-loop situations could be used likewise:
+
+	<my-tag foo="{ foo }"><my-tag />
+
+I would also suggest the final changes to the tag itself:
+
+	<my-tag>
+		<span>{ opts.foo }</span>
+
+		<script>
+			var tag = this;
+		</script>
+	</my-tag>
 
 ---
 

@@ -8,32 +8,38 @@
 	</form>
 
 	<script>
+		var tag = this;
+		tag.isOpen = isOpen;
+		tag.toggle = toggle;
+        tag.open = open;
+		tag.close = close;
+		tag.submit = submit;
 		
-		this.toggle = function() {
-            if (this.isOpen()) {
-                this.close();
+		app.eventBus.on('elem:loginbox:toggle', tag.toggle);
+		
+        function isOpen() {
+            return (tag.root.style.display != 'none');
+        };
+		
+		function toggle() {
+            if (tag.isOpen()) {
+                tag.close();
             } else {
-                this.open();
+                tag.open();
             }
 		};
         
-        this.isOpen = function() {
-            return (this.root.style.display != 'none');
+        function open() {
+            tag.root.style.display = '';
         };
         
-        this.open = function() {
-            this.root.style.display = '';
-        };
-        
-        this.close = function() {
-            this.root.style.display = 'none';
+        function close() {
+            tag.root.style.display = 'none';
         };
 
-		this.submit = function(a,b,c) {
+		function submit(a,b,c) {
 			console.log('submit');
 		};
-		
-		app.eventBus.on('elem:loginbox:toggle', this.toggle.bind(this));
         
 	</script>
 

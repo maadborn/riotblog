@@ -1,13 +1,10 @@
 <blog-posts>
-	<blog-post each={ posts }></blog-post>
+	<blog-post each="{ post in posts }" post="{ post }"></blog-post>
 
 	<script>
-		this.posts = opts.posts;
+		var tag = this;
+		tag.posts = opts.posts;
 		
-		console.log('start listening for posts update');
-		app.eventBus.on('data:posts:updated', function() {
-			console.log('heard posts update');
-			this.update();
-		}.bind(this));
+		app.eventBus.on('data:posts:updated', tag.update);
 	</script>
 </blog-posts>

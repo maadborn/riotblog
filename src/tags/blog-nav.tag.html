@@ -9,8 +9,10 @@
 	</nav>
 
 	<script>
-		this.toggleLoginBox = function(event) {
-			//this.tags.loginbox.toggle();
+		var tag = this;
+		tag.toggleLoginBox = toggleLoginBox;
+		
+		function toggleLoginBox(event) {
 			app.eventBus.trigger('elem:loginbox:toggle');
 			return false;
 		};
