@@ -1,10 +1,9 @@
 <blog-posts>
-	<blog-post each="{ post in posts }" post="{ post }"></blog-post>
-
+	<blog-post each="{ p in posts }" post="{ p }"></blog-post>
+	
 	<script>
 		var tag = this;
 		tag.posts = opts.posts;
-		
-		app.eventBus.on('data:posts:updated', tag.update);
+		tag.eventBus.on('data:posts:updated', tag.update);
 	</script>
 </blog-posts>

@@ -1,16 +1,15 @@
 <blog-post>
 	<h3>{ opts.post.header }</h3>
 	<div class="post-meta"></div>
-	<div name="postBody" class="post-content">{ opts.post.body }</div>
+	<div name="postBody" class="post-content">
+		<parsed-html>{ parent.opts.post.body }</parsed-html> 
+	</div>
 	<div class="post-actions"></div>
 
 	<script>
+		// Note: parent is referred in the parsed-html as it takes a yield expression, 
+		// which sets the context to the parent (this one) tag
 		var tag = this;
-		tag.post = opts.post;	// hm, will this work everywhere? using opts.post in markup above as tag.post isnt :/
-		
-		tag.on('update', function(a) { 
-			tag.postBody.innerHTML = tag.post.body;
-		});
 	</script>
 
 	<style scoped></style>

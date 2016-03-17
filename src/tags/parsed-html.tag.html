@@ -1,0 +1,9 @@
+<parsed-html>
+	<yield></yield>
+	<script>
+		var tag = this;
+		tag.on('mount', function() { 
+			tag.root.innerHTML = tag.root.innerText; 
+		});
+	</script>
+</parsed-html>
