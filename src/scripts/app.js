@@ -3,6 +3,7 @@ import router		from './router';
 import eventBus 	from './eventbus';
 import tempdata		from './tempdata';
 import eventBusMixin from './eventbusmixin';
+import momentMixin	from './momentmixin';
 
 import parsedTag	from '../tags/parsed-html.tag.html';
 import aboutTag		from '../tags/blog-about.tag.html';
@@ -26,6 +27,8 @@ export default {
 		// use a global mixin, adding the eventbus
 		// "carpet bombing" here now, might refactor if it is deemed unnecessary
 		riot.mixin(eventBusMixin);
+		
+		riot.mixin('momentMixin', momentMixin);
 
 		riot.mount('blog-app');
 	}

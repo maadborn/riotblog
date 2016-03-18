@@ -1,16 +1,54 @@
 <blog-post>
 	<h3>{ opts.post.header }</h3>
-	<div class="post-meta"></div>
+	<div class="post-meta">
+		<div class="post-time" title="{ absoluteTime }">{ relativeTime }</div>
+	</div>
 	<div name="postBody" class="post-content">
 		<parsed-html>{ parent.opts.post.body }</parsed-html> 
 	</div>
 	<div class="post-actions"></div>
 
 	<script>
+		this.mixin('momentMixin');
+		
 		// Note: parent is referred in the parsed-html as it takes a yield expression, 
 		// which sets the context to the parent (this one) tag
 		var tag = this;
+		tag.relativeTime = this.moment(opts.post.time).fromNow();
+		tag.absoluteTime = this.moment(opts.post.time).format('YYYY-MM-DD HH:mm');
 	</script>
 
-	<style scoped></style>
+	<style scoped>
+		:scope {
+			display: block;
+			border-bottom: 1px dotted #ccc;
+			padding: 1em 0 2em 0;
+		}
+		
+		:scope:first-child {
+			padding-top: 0;
+		}
+		
+		:scope:last-child {
+			border-bottom: none;
+		}
+		
+		h3 {
+			color: #333;
+		}
+		
+		.post-meta {
+			font-size: 0.8em;
+			font-style: italic;
+			color: #888;
+			margin: -1em 0 0.5em 0;
+			position: relative;
+			height: 1em;
+		}
+		
+		.post-time {
+			position: absolute;
+			right: 0;
+		}
+	</style>
 </blog-post>

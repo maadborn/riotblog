@@ -103,19 +103,54 @@ In the second case, ```this``` inside ```my-tag``` will be our tag instance with
 
 So the solution I find most usable is:
 
-	<my-tag each="{ foo in foos }" foo="{ foo }"><my-tag />
+	<my-tag each="{ foo in foos }" bar="{ foo }"><my-tag />
 
 Which in non-loop situations could be used likewise:
 
-	<my-tag foo="{ foo }"><my-tag />
+	<my-tag bar="{ foo }"><my-tag />
 
 I would also suggest the final changes to the tag itself:
 
 	<my-tag>
-		<span>{ opts.foo }</span>
+		<span>{ opts.bar }</span>
 
 		<script>
 			var tag = this;
+		</script>
+	</my-tag>
+
+#### Q: I need access to external libraries in my tag, but just adding them to the global scope, or on my app object, or by script elements looks iffy. Is there any other way? ####
+
+A: Yes, mixins! Mixins are essentially the tag equivalent to ```_.extend``` or ```Object.assign```, allowing you to add properties and methods to your tags, but defined and maintained elsewhere in your code, resulting in multiple benefits in the long run. This is the core of composition used at component level, which is mentioned e.g. in [FIRST](https://addyosmani.com/first/) principle.     
+
+Let's say you would like to add some MomentJS functionality to your tag. Start by creating a new file, ```momentmixin.js```:
+
+	// momentmixin.js
+	import _moment from 'moment';
+
+	export default {
+		moment: _moment,
+		dateString(date): { 
+			return _moment(date).format('YYYY-MM-DD');
+		}
+	};
+
+Then you add it to Riot as shared mixin during your app initialization:
+
+	// app.js
+	import riot 	   from 'riot';
+	import momentMixin from './momentmixin';
+	...
+	riot.mixin('momentMixin', momentMixin);
+
+And finally you add the mixin to your tag:
+
+	// my-tag.tag.html
+	<my-tag>
+		<span>{ dateString(opts.time) }</span>
+		<script>
+			this.mixin('momentMixin');
+			// this.moment and this.dateString(...) are now available here :)
 		</script>
 	</my-tag>
 
