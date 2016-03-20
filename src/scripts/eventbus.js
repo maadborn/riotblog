@@ -1,3 +1,7 @@
 import riot from 'riot';
 
-export default riot.observable({});
+const EventBus = riot.observable({});
+
+EventBus.on('*', (x) => console.log('EventBus on:', x));
+
+export default EventBus;

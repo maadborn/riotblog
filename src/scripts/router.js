@@ -1,5 +1,5 @@
 import riot			from 'riot';
-import dataService 	from './dataservice';
+import dataService 	from './services/dataservice';
 
 export default {
 	contentSelector: null,

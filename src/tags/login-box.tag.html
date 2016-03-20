@@ -1,14 +1,16 @@
 <login-box>
-	<span></span>
 	<button type="button" class="close" onclick="{ close }" title="Close">×</button>
 	<form name="loginform" class="loginform" onsubmit="{ submit }">
-		<input name="username" type="text" placeholder="User"></input>
-		<input name="password" type="text" placeholder="Password"></input>
+		<input name="username" type="text" placeholder="Username"></input>
+		<input name="password" type="password" placeholder="Password"></input>
 		<button type="submit">Login</button>
 	</form>
 
 	<script>
 		var tag = this;
+		
+		tag.mixin('userServiceMixin');
+		
 		tag.isOpen = isOpen;
 		tag.toggle = toggle;
         tag.open = open;
@@ -31,14 +33,16 @@
         
         function open() {
             tag.root.style.display = '';
+			tag.username.focus();
         };
         
         function close() {
             tag.root.style.display = 'none';
         };
 
-		function submit(a,b,c) {
-			console.log('submit');
+		function submit(event) {
+			//console.log('submit', event);
+			tag.userService.login(tag.username.value, tag.password.value);
 		};
         
 	</script>
@@ -52,6 +56,7 @@
 			/*height: 200px;*/
 			background-color: #28c;
             /*border: 2px solid #39d;*/
+			z-index: 100;
 		}
 
 		@media (max-width: 700px) {
@@ -67,14 +72,15 @@
 		    right: 0;
 		    margin: 0.5em;
 			height: 1.5em;
-			line-height: 0.7em;
+			line-height: 0.7rem;
 		}
 
 		.loginform {
 			margin: 0.5em;
 		}
 
-		.loginform input[type=text] {
+		.loginform input[type=text],
+		.loginform input[type=password] {
 			width: 60%;
 			margin-bottom: 0.6em;
 		}

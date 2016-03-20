@@ -1,4 +1,4 @@
-import eventBus from './eventbus';
+import eventBus from '../eventbus';
 
 export default {
 	// init() {

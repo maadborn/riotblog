@@ -1,9 +1,11 @@
 import riot 		from 'riot';
 import router		from './router';
 import eventBus 	from './eventbus';
-import tempdata		from './tempdata';
-import eventBusMixin from './eventbusmixin';
-import momentMixin	from './momentmixin';
+//import tempdata		from './tempdata';
+
+import evtBusMixin 	from './mixins/eventbusmixin';
+import momentMixin	from './mixins/momentmixin';
+import userSvcMixin	from './mixins/userservicemixin';
 
 import parsedTag	from '../tags/parsed-html.tag.html';
 import aboutTag		from '../tags/blog-about.tag.html';
@@ -13,6 +15,7 @@ import editorTag 	from '../tags/blog-editor.tag.html';
 import postTag 		from '../tags/blog-post.tag.html';
 import postsTag		from '../tags/blog-posts.tag.html';
 import loginboxTag	from '../tags/login-box.tag.html';
+import loaderTag	from '../tags/load-indicator.tag.html';
 
 export default {
 	router: null,
@@ -26,9 +29,10 @@ export default {
 		
 		// use a global mixin, adding the eventbus
 		// "carpet bombing" here now, might refactor if it is deemed unnecessary
-		riot.mixin(eventBusMixin);
+		riot.mixin(evtBusMixin);
 		
 		riot.mixin('momentMixin', momentMixin);
+		riot.mixin('userServiceMixin', userSvcMixin);
 
 		riot.mount('blog-app');
 	}

@@ -56,7 +56,7 @@ function compile(watch) {
     function rebundle() {
         return bundler.bundle()
             .on('error', function(err) { 
-				gutil.log('Bundle error: ' + err.message + '\n' + err);  
+				gutil.log('Bundle error: ' /* + err.message + '\n'*/ + err);  
                 browserSync.notify('Browserify error!');
                 this.emit('end'); 
             })
