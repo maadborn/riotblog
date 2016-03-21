@@ -4,6 +4,6 @@
 	<script>
 		var tag = this;
 		tag.posts = opts.posts;
-		tag.eventBus.on('data:posts:updated', tag.update);
+		tag.eventBus.on(tag.AppEvents.Data.Posts.Updated, tag.update);
 	</script>
 </blog-posts>

@@ -9,16 +9,14 @@
 	<script>
 		var tag = this;
 		
-		tag.eventBus.on('data:global:loading', loading);
-		tag.eventBus.on('data:global:loaded', loaded);
+		tag.eventBus.on(tag.AppEvents.State.Loading, loading);
+		tag.eventBus.on(tag.AppEvents.State.Loaded, loaded);
 		
 		function loading() {
-			console.log('1');
 			tag.root.style.display = 'flex'; //'block';
 		};
 		
 		function loaded() {
-			console.log('2');			
 			tag.root.style.display = 'none';
 		};
 	</script>

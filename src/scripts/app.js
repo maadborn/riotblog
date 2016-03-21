@@ -1,6 +1,7 @@
 import riot 		from 'riot';
 import router		from './router';
 import eventBus 	from './eventbus';
+import stateMgr		from './statemanager';
 //import tempdata		from './tempdata';
 
 import evtBusMixin 	from './mixins/eventbusmixin';
@@ -20,12 +21,16 @@ import loaderTag	from '../tags/load-indicator.tag.html';
 export default {
 	router: null,
 	eventBus: null,
+	stateManager: null,
 	init() {
 		this.router = router;
 		// string passed in here is the id of the element in which content should be loaded
 		this.router.init('content');
 		
 		this.eventBus = eventBus;
+		
+		// this.stateManager = stateMgr;
+		// this.stateManager.init();
 		
 		// use a global mixin, adding the eventbus
 		// "carpet bombing" here now, might refactor if it is deemed unnecessary

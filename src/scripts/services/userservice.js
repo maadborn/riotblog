@@ -1,10 +1,11 @@
 import eventBus from '../eventbus';
+import AppEvents from '../appevents';
 
 const UserService = {
 	login(user, pw) {
 		console.log('logging in', user, pw);
 
-		eventBus.trigger('data:global:loading');
+		eventBus.trigger(AppEvents.State.Loading);
 		
 		let p = new Promise((resolve, reject) => {
 			setTimeout(() => {
@@ -18,7 +19,7 @@ const UserService = {
 		}).catch((reason) => {
 			console.log('login failed:', reason);
 		}).then(() => {
-			eventBus.trigger('data:global:loaded');
+			eventBus.trigger(AppEvents.State.Loaded);
 		});
 		
 		return p;

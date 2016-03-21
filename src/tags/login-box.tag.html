@@ -17,7 +17,7 @@
 		tag.close = close;
 		tag.submit = submit;
 		
-		tag.eventBus.on('elem:loginbox:toggle', tag.toggle);
+		tag.eventBus.on(tag.AppEvents.Elements.LoginBox.Toggle, tag.toggle);
 		
         function isOpen() {
             return (tag.root.style.display != 'none');

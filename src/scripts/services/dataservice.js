@@ -1,6 +1,7 @@
 import riot		from 'riot';
 import tempdata	from './tempdata';
 import eventBus from '../eventbus';
+import AppEvents from '../appevents';
 
 const DataService = {
 	get posts() {
@@ -8,7 +9,7 @@ const DataService = {
 		
 		setTimeout(() => {
 			posts.push(...tempdata.posts);
-			eventBus.trigger('data:posts:updated');
+			eventBus.trigger(AppEvents.Data.Posts.Updated);
 		}, 0);
 
 		return posts;
