@@ -1,9 +1,7 @@
 import eventBus from '../eventbus';
-import appEvents from '../appevents';
+import _AppEvents from '../appevents';
 
 export default {
-	// init() {
-	// },
 	eventBus: eventBus,
-	AppEvents: appEvents
+	AppEvents: _AppEvents
 };

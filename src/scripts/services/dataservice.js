@@ -1,7 +1,7 @@
-import riot		from 'riot';
-import tempdata	from './tempdata';
-import eventBus from '../eventbus';
-import AppEvents from '../appevents';
+import riot			from 'riot';
+import tempdata		from './tempdata';
+import eventBus 	from '../eventbus';
+import AppEvents 	from '../appevents';
 
 const DataService = {
 	get posts() {
@@ -15,6 +15,5 @@ const DataService = {
 		return posts;
 	}
 };
-
-							// Export as singleton
-export default DataService; //Object.create(DataService);
+						
+export default DataService;
