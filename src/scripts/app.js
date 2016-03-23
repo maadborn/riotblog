@@ -29,7 +29,7 @@ export default {
 		
 		this.eventBus = eventBus;
 		
-		// this.stateManager = stateMgr;
+		this.stateManager = stateMgr;
 		// this.stateManager.init();
 		
 		// use a global mixin, adding the eventbus

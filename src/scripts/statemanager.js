@@ -1,4 +1,5 @@
-import __eventBus from './eventbus';
+import eventBus from './eventbus';
+import AppEvents from './appevents';
 
 /**
  * Application state manager
@@ -57,8 +58,8 @@ export const State = {
 
 const StateContainer = {
 	_state: State.Unauthenticated,
-	set state(state) {
-		this._state = state;
+	set state(value) {
+		this._state = value;
 	},
 	get state() { 
 		return this._state; 
@@ -67,18 +68,13 @@ const StateContainer = {
 
 const StateEventer = {
 	_eventBus: eventBus,
-	set state(state) {
-		this._state = state;
-	},
-	get state() { 
-		return this._state; 
-	},
 	init() {
-		this._eventBus.on('state:authenticated', () => { this.state = State.Authenticated; });
-		this._eventBus.on('state:unauthenticated', () => { this.state = State.Unauthenticated; });
-	}
+		this._eventBus.on(AppEvents.State.Authenticated,   () => { this.state = State.Authenticated; });
+		this._eventBus.on(AppEvents.State.Unauthenticated, () => { this.state = State.Unauthenticated; });
+		return this;
+	},
 };
 
-const StateManager = Object.assign({}, StateEventer, StateContainer);
+const StateManager = Object.create(Object.assign({}, StateEventer.init(), StateContainer));
 
 export default StateManager;

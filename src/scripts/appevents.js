@@ -6,8 +6,10 @@ const AppEvents = {
 		}
 	},
 	State: {
-		Loading: 'data:global:loading',
-		Loaded: 'data:global:loaded'
+		Loading: 'state:loading',
+		Loaded: 'state:loaded',
+		Unauthenticated: 'state:authenticated',
+		Authenticated: 'state:unauthenticated'
 	},
 	Data: {
 		Posts: {
