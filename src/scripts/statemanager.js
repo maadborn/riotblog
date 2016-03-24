@@ -14,67 +14,42 @@ export const State = {
 	// add Loading?
 };
 
-// export const StateManager = {
-// 	_eventBus: eventBus,
-// 	_state: State.Unauthenticated,
-// 	set state(state) {
-// 		this._state = state;
-// 	},
-// 	get state() { 
-// 		return this._state; 
-// 	},
-// 	init() {
-// 		this._eventBus.on('state:authenticated', () => { this.state = State.Authenticated; });
-// 		this._eventBus.on('state:unauthenticated', () => { this.state = State.Unauthenticated; });
-// 	}
-// };
-
-// export default StateManager;
-
-///// NEW /////
-
-// const StateContainer = {
-// 	set state(state) {
-// 		this._state = state;
-// 	},
-// 	get state() { 
-// 		return this._state; 
-// 	},
-// };
-
-// function StateManager(state = State.Unauthenticated, eventBus = __eventBus) {
-// 	let _state = state;
-// 	const _eventBus = eventBus;
-	
-// 	_eventBus.on('state:authenticated', () => { _state = State.Authenticated; });
-// 	_eventBus.on('state:unauthenticated', () => { _state = State.Unauthenticated; });
-	
-// 	return this;
-// };
-
-// const stateManager = Object.create(Object.assign(StateManager, StateContainer));
-
-/////// NEW 2 ///////
-
-const StateContainer = {
+const StateManager = {
+	_eventBus: eventBus,
 	_state: State.Unauthenticated,
+	
 	set state(value) {
 		this._state = value;
 	},
 	get state() { 
 		return this._state; 
 	},
-};
-
-const StateEventer = {
-	_eventBus: eventBus,
+	
+	// Add testing ffs!
+	addState(state) {
+		this._state = this._state | state;	
+	},
+	removeState(state) {
+		// Idea: First mask out the state to remove from the stored state,
+		// to avoid "removing" a state which isn't stored == adding it.
+		// Then XOR the masked state with the stored state to only try to remove that state.
+		this._state = (this._state & state) ^ this._state;	
+	},
+	
 	init() {
-		this._eventBus.on(AppEvents.State.Authenticated,   () => { this.state = State.Authenticated; });
-		this._eventBus.on(AppEvents.State.Unauthenticated, () => { this.state = State.Unauthenticated; });
+		const self = this;
+
+		this._eventBus.on(AppEvents.State.Authenticated, () => { 
+			self.addState(State.Authenticated); 
+		});
+		this._eventBus.on(AppEvents.State.Unauthenticated, () => { 
+			self.removeState(State.Authenticated); 
+		});
+		
 		return this;
 	},
 };
 
-const StateManager = Object.create(Object.assign({}, StateEventer.init(), StateContainer));
+//const StateManager = Object.create(Object.assign({}, StateContainer.init())); // StateContainer));
 
-export default StateManager;
+export default StateManager.init();
