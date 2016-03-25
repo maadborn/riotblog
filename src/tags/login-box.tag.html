@@ -1,9 +1,13 @@
 <login-box>
 	<button type="button" class="close" onclick="{ close }" title="Close">×</button>
-	<form name="loginform" class="loginform" onsubmit="{ submit }">
+	<form name="loginform" class="loginform" onsubmit="{ submitLogin }" hide="{ isAuthenticated }">
 		<input name="username" type="text" placeholder="Username"></input>
 		<input name="password" type="password" placeholder="Password"></input>
 		<button type="submit">Login</button>
+	</form>
+	<form name="logoutform" class="loginform" onsubmit="{ submitLogout }" show="{ isAuthenticated }">
+		<label>Logged in as { username.value }</label>
+		<button type="submit">Logout</button>
 	</form>
 
 	<script>
@@ -11,13 +15,21 @@
 		
 		tag.mixin('userServiceMixin');
 		
+		tag.isAuthenticated = false;
 		tag.isOpen = isOpen;
 		tag.toggle = toggle;
         tag.open = open;
 		tag.close = close;
-		tag.submit = submit;
+		tag.submitLogin = submitLogin;
+		tag.submitLogout = submitLogout;
+		tag.reactToAuthentication = reactToAuthentication;
+		tag.reactToUnauthentication = reactToUnauthentication;
 		
 		tag.eventBus.on(tag.AppEvents.Elements.LoginBox.Toggle, tag.toggle);
+		tag.eventBus.on(tag.AppEvents.State.Authenticated, tag.reactToAuthentication);
+		tag.eventBus.on(tag.AppEvents.State.Unauthenticated, tag.reactToUnauthentication);
+		
+		/* Implementations */
 		
         function isOpen() {
             return (tag.root.style.display != 'none');
@@ -40,10 +52,28 @@
             tag.root.style.display = 'none';
         };
 
-		function submit(event) {
-			//console.log('submit', event);
+		function submitLogin(event) {
 			tag.userService.login(tag.username.value, tag.password.value);
 		};
+		
+		function submitLogout(event) {
+			tag.userService.logout(tag.username.value);
+		};
+		
+		function reactToAuthentication() { 
+			tag.isAuthenticated = true;
+			tag.update();
+			
+			setTimeout(function() {
+				tag.close();
+			}, 2000);
+		}
+		
+		function reactToUnauthentication() { 
+			tag.isAuthenticated = false;
+			tag.update();
+			tag.close();
+		}
         
 	</script>
 
@@ -75,17 +105,18 @@
 			line-height: 0.7rem;
 		}
 
-		.loginform {
+		form {
 			margin: 0.5em;
+			min-height: 30px; /* hm.. */
 		}
 
-		.loginform input[type=text],
-		.loginform input[type=password] {
+		form input[type=text],
+		form input[type=password] {
 			width: 60%;
 			margin-bottom: 0.6em;
 		}
         
-        .loginform button[type=submit] {
+        form button[type=submit] {
             position: absolute;
             height: 70%;
             width: 20%;
@@ -93,5 +124,11 @@
             left: 65%;
             top: 10%;
         }
+		
+		form label {
+			color: white;
+			margin: 0.3em;
+    		display: inline-block;
+		}
 	</style>
 </login-box>

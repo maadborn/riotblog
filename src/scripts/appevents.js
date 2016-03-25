@@ -8,8 +8,8 @@ const AppEvents = {
 	State: {
 		Loading: 'state:loading',
 		Loaded: 'state:loaded',
-		Unauthenticated: 'state:authenticated',
-		Authenticated: 'state:unauthenticated'
+		Authenticated: 'state:authenticated',
+		Unauthenticated: 'state:unauthenticated',
 	},
 	Data: {
 		Posts: {

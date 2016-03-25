@@ -3,19 +3,39 @@
 		<ul>
 			<li><a href="#home">Home</a></li>
 			<li><a href="#about">About</a></li>
-			<li class="right"><a href="#login" onclick="{ toggleLoginBox }">Login</a></li>
+			<li class="right"><a href="#login" onclick="{ toggleLoginBox }">{ logXText }</a></li>
 		</ul>
 		<login-box name="loginbox" hide="{ true }" />
 	</nav>
 
 	<script>
 		var tag = this;
+		
 		tag.toggleLoginBox = toggleLoginBox;
+		tag.logXText = 'Login';
+		tag.reactToAuthentication = reactToAuthentication;
+		tag.reactToUnauthentication = reactToUnauthentication;
+		
+		tag.eventBus.on(tag.AppEvents.State.Authenticated, tag.reactToAuthentication);
+		tag.eventBus.on(tag.AppEvents.State.Unauthenticated, tag.reactToUnauthentication);
+		
+		/* Implementations */
 		
 		function toggleLoginBox(event) {
 			tag.eventBus.trigger(tag.AppEvents.Elements.LoginBox.Toggle);
 			return false;
 		};
+		
+		function reactToAuthentication() {
+			tag.logXText = 'Logout';
+			tag.update();
+		}
+		
+		function reactToUnauthentication() { 
+			tag.logXText = 'Login';
+			tag.update();
+		}
+		
 	</script>
 
 	<style scoped>
