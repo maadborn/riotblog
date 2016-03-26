@@ -1,0 +1,146 @@
+<blog-toast>
+	<div class="toast { type }" onclick="{ hideToast }">
+		{ message }
+	</div>
+
+	<script>
+		var ToastType = {
+			Success: 'success',
+			Warning: 'warning',
+			Error: 'error',
+			Info: 'info'
+		};
+		
+		var tag = this;
+		
+		// Default values
+		tag.defaultMessage = '[No message]';
+		tag.defaultType = ToastType.Info;
+		tag.defaultTimeout = 8000;
+		tag.defaultMaxLength = 200;
+		tag.maxWords = 25;
+		 
+		// Properties
+		tag.message = tag.defaultMessage;
+		tag.type = tag.defaultType;
+		tag.timeoutToken = null;
+		
+		// Methods
+		tag.reactToShowToast = reactToShowToast;
+		tag.showToast = showToast;
+		tag.hideToast = hideToast;
+		tag.truncate = truncate;
+		//tag.resetToDefaults = resetToDefaults;
+		tag.getTimeout = getTimeout;
+		
+		tag.eventBus.on(tag.AppEvents.Elements.Toast.Show, tag.reactToShowToast);
+		
+		function reactToShowToast(message, type) {
+			tag.message = tag.truncate(message || tag.defaultMessage);
+			tag.type = type || ToastType.Info;
+			
+			tag.update();
+			
+			tag.showToast();
+		}
+		
+		function showToast() {
+			tag.root.classList.add('show');
+			
+			if (tag.timeoutToken) {
+				clearTimeout(tag.timeoutToken);
+			}
+			
+			if (tag.type === ToastType.Warning
+				|| tag.type === ToastType.Error) {
+				return;
+			}
+			
+			tag.timeoutToken = setTimeout(function() {
+				tag.hideToast();
+				tag.timeoutToken = null;
+			}, tag.getTimeout(tag.message));
+		}
+		
+		function hideToast() {
+			tag.root.classList.remove('show');
+			tag.resetToDefaults();
+		}
+		
+		function truncate(text) {
+			var words = text.split(' ');
+			if (words.length > tag.maxWords) {
+				return words
+					.slice(0, tag.maxWords)
+					.join(' ') 
+					+ "..."; 
+			}
+			return text;
+		}
+		
+		// function resetToDefaults() {
+		// 	//debugger;
+		// 	if (!tag.timeoutToken) {
+		// 		// tag.message = tag.defaultMessage;
+		// 		// tag.type = tag.defaultType;
+		// 	}
+		// }
+		
+		function getTimeout(text) {
+			var wordCount = text.split(' ').length;
+			
+			return (wordCount / tag.maxWords) * tag.defaultTimeout + 1000;
+		}
+	</script>
+
+	<style scoped>
+		:scope {
+			position: absolute;
+			top: -130px;
+			/* height + 2*padding */
+			left: 50%;
+			transform: translate(-50%, 0);
+			z-index: 200;
+			transition: top 300ms ease-in-out;
+			cursor: pointer;
+		}
+		
+		:scope.show {
+			top: 0px;
+			transition: top 300ms ease-in-out;
+		}
+		
+		.toast {
+			padding: 15px;
+			min-width: 200px;
+			max-width: 500px;
+			max-height: 100px;
+			border-width: 1px;
+			border-style: none solid solid solid;
+		}
+		
+		.success {
+			color: green;
+			border-color: green;
+			background-color: #aea;
+		}
+		
+		.warning {
+			color: #e50;
+			border-color: #e50;
+			background-color: #fd7;
+		}
+		
+		.error {
+			color: darkred;
+			border-color: darkred;
+			background-color: lightcoral;
+		}
+		
+		.info {
+			color: white;
+			border-color: lightblue;
+			background-color: #4ae;
+		}
+	</style>
+</blog-toast>

@@ -20,6 +20,7 @@
 			tag.dataService.submitPost(post)
 				.then(function(success) {
 					if (success) {
+						tag.eventBus.trigger(tag.AppEvents.Elements.Toast.Show, 'Post added successfully', 'success');
 						riot.route('home');
 					}
 				});
@@ -27,11 +28,10 @@
 		}
 		
 		function buildPostObject() {
-			var post = {};
-			post.title = tag.postTitle.value;
-			post.body = tag.tags.editor.text;
-			
-			return post;
+			return {
+				title: tag.postTitle.value,
+				body: tag.tags.editor.text,
+			};
 		}
 	</script>
 	<style scoped>

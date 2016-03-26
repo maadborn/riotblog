@@ -3,6 +3,9 @@ const AppEvents = {
 	Elements: {
 		LoginBox: {
 			Toggle: 'elem:loginbox:toggle'
+		},
+		Toast: {
+			Show: 'elem:toast:show'
 		}
 	},
 	State: {

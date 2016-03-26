@@ -1,10 +1,5 @@
 <blog-editor>
-	<textarea 
-		name="editorContent" 
-		class="editor" 
-		placeholder="Post..." 
-		onchange="{ textChange }"
-		tabindex="{ opts.options.tabindex }"></textarea>
+	<textarea name="editorContent" class="editor" placeholder="Post..." onchange="{ textChange }" tabindex="{ opts.options.tabindex }"></textarea>
 
 	<script>
 		var tag = this;
@@ -16,17 +11,13 @@
 			tag.text = tag.editorContent.value;
 		}
 	</script>
-	
+
 	<style scoped>
-		:scope {
-		}
-		
 		.editor {
 			width: 100%;
 			max-width: 100%;
 			height: 300px;
 			box-sizing: border-box;
 		}
-		
 	</style>
 </blog-editor>

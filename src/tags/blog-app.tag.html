@@ -1,21 +1,37 @@
 <blog-app>
 	<loading-indicator />
-	
+	<blog-toast name="appToast" />
+
 	<header>
 		<h1 class="main-heading"><a href="/home">Riot blog</a></h1>
 		<blog-nav></blog-nav>
 	</header>
+<!--
+	<div>
+		<button onclick="{ triggerShowToast }">toast</button>
+		<button onclick="{ triggerShowToast2 }">toast</button>
+	</div>-->
 
 	<div id="content" class="content"></div>
 
 	<footer></footer>
 
 	<script>
+		var tag = this;
+		// this.triggerShowToast = function() {
+		// 	// tag.tags.appToast.showToast();
+		// 	tag.eventBus.trigger(tag.AppEvents.Elements.Toast.Show, 'Blanditiis laboriosam impedit quibusdam sit, dicta eaque tempore laboriosam impedit quibusdam sit, dicta eaque tempore laboriosam impedit quibusdam sit, dicta eaque tempore, aliquam quis incidunt. Autem accusantium recusandae, quis obcaecati eveniet inventore. Fugit explicabo obcaecati, voluptate repellat vel, asperiores deserunt facere saepe iste est. ', 'warning');
+		// };
+		// this.triggerShowToast2 = function() {
+		// 	// tag.tags.appToast.showToast();
+		// 	tag.eventBus.trigger(tag.AppEvents.Elements.Toast.Show, 'aliquam quis incidunt. Autem accusantium recusandae, quis obcaecati eveniet inventore. Fugit explicabo obcaecati, voluptate repellat vel, asperiores deserunt facere saepe iste est. ', 'info');
+		// };
 	</script>
 
 	<style scoped>
 		:scope {
 			display: block;
+			position: relative;
 			margin: 0 auto;
 			/*padding: 15px;*/
 			height: 100%;
@@ -23,24 +39,24 @@
 			box-sizing: border-box;
 			background-color: #f3f3f3;
 		}
-
+		
 		@media (min-width: 700px) {
 			:scope {
 				width: 700px;
 			}
 		}
-
+		
 		.main-heading {
 			color: #069;
 			margin-top: 0;
 			margin-bottom: 0;
 		}
-
+		
 		.main-heading a {
 			color: #069;
 			background-color: transparent;
 		}
-
+		
 		.content,
 		.main-heading {
 			padding: 15px;

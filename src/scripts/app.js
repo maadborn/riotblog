@@ -19,6 +19,7 @@ import postTag 		from '../tags/blog-post.tag.html';
 import postsTag		from '../tags/blog-posts.tag.html';
 import loginboxTag	from '../tags/login-box.tag.html';
 import loaderTag	from '../tags/load-indicator.tag.html';
+import toastTag		from '../tags/blog-toast.tag.html';
 
 export default {
 	router: null,
