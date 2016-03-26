@@ -3,17 +3,53 @@ import tempdata		from './tempdata';
 import eventBus 	from '../eventbus';
 import AppEvents 	from '../appevents';
 
+const DataServiceValidator = {
+	validatePost(post) {
+		return post.title
+			&& post.body;
+	}
+};
+
 const DataService = {
-	get posts() {
-		const posts = riot.observable([]);
-		
+	posts: riot.observable([]),
+	
+	getPosts() {
 		setTimeout(() => {
-			posts.push(...tempdata.posts);
+			this.posts.push(...tempdata.posts);
 			eventBus.trigger(AppEvents.Data.Posts.Updated);
 		}, 0);
 
-		return posts;
+		return this.posts;
+	},
+	
+	submitPost(post) {
+		const prom = new Promise((resolve, reject) => {
+			eventBus.trigger(AppEvents.State.Loading);
+			
+			if (!DataServiceValidator.validatePost(post)) {
+				reject('The post is missing required parts');
+			}
+			
+			setTimeout(() => {
+				const p2 = Object.assign(post, { time: Date.now() });
+				resolve(p2);
+			}, 300);
+		});
+		
+		prom.then((responsePost) => {
+			this.posts.unshift(responsePost);
+			eventBus.trigger(AppEvents.Data.Posts.Updated);
+			return true;
+		}).catch((message) => {
+			console.error(message);
+			return false;
+		}).then((success) => {
+			eventBus.trigger(AppEvents.State.Loaded);
+			return success;
+		});
+		
+		return prom;
 	}
 };
-						
+
 export default DataService;

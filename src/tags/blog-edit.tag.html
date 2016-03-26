@@ -1,0 +1,43 @@
+<blog-edit>
+	<h3>{ headerText }</h3>
+	<form onsubmit="{ send }">
+		<button type="submit" class="right" tabindex="10">Submit</button>
+		<input type="text" name="postTitle" class="post-title" placeholder="Title..." title="Title" tabindex="1"/>
+		<blog-editor name="editor" options="{ { tabindex: 2 } }"/>
+	</form>
+	<script>
+		var tag = this;
+		
+		tag.mixin('dataServiceMixin');
+		
+		tag.headerText = (opts.isNew ? 'New post' : 'Edit post');
+		tag.send = send;
+		
+		/* Implementations */
+		
+		function send(event) {
+			var post = buildPostObject();
+			tag.dataService.submitPost(post)
+				.then(function(success) {
+					if (success) {
+						riot.route('home');
+					}
+				});
+			return false;
+		}
+		
+		function buildPostObject() {
+			var post = {};
+			post.title = tag.postTitle.value;
+			post.body = tag.tags.editor.text;
+			
+			return post;
+		}
+	</script>
+	<style scoped>
+		.post-title {
+			width: 80%;
+			font-size: 1.2rem;
+		}
+	</style>
+</blog-edit>

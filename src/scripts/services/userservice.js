@@ -16,7 +16,6 @@ const UserService = {
 		
 		p.then((response) => {
 			console.log(response);
-			debugger;
 			eventBus.trigger(AppEvents.State.Authenticated, user);
 		}).catch((reason) => {
 			console.log('login failed:', reason);
@@ -28,7 +27,6 @@ const UserService = {
 	},
 	logout() {
 		console.log('logging out');
-		
 		eventBus.trigger(AppEvents.State.Unauthenticated);
 	}
 };
