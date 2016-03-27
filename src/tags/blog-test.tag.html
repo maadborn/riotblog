@@ -1,0 +1,24 @@
+<blog-test>
+	<div>
+		<h3>Toasts</h3>
+		<button onclick="{ triggerShowToastSuccess }">Success</button>
+		<button onclick="{ triggerShowToastInfo }">Info</button>
+		<button onclick="{ triggerShowToastWarning }">Warning</button>
+		<button onclick="{ triggerShowToastError }">Error</button>
+	</div>
+<script>
+		var tag = this;
+		this.triggerShowToastSuccess = function() {
+			tag.eventBus.trigger(tag.AppEvents.Elements.Toast.Show, 'Success!', 'success');
+		};
+		this.triggerShowToastInfo = function() {
+			tag.eventBus.trigger(tag.AppEvents.Elements.Toast.Show, 'aliquam quis incidunt. Autem accusantium recusandae, quis obcaecati eveniet inventore. Fugit explicabo obcaecati, voluptate repellat vel, asperiores deserunt facere saepe iste est. ', 'info');
+		};
+		this.triggerShowToastWarning = function() {
+			tag.eventBus.trigger(tag.AppEvents.Elements.Toast.Show, 'You have been warned!', 'warning');
+		};
+		this.triggerShowToastError = function() {
+			tag.eventBus.trigger(tag.AppEvents.Elements.Toast.Show, 'Blanditiis laboriosam impedit quibusdam sit, dicta eaque tempore laboriosam impedit quibusdam sit, dicta eaque tempore laboriosam impedit quibusdam sit, dicta eaque tempore, aliquam quis incidunt. Autem accusantium recusandae, quis obcaecati eveniet inventore. Fugit explicabo obcaecati, voluptate repellat vel, asperiores deserunt facere saepe iste est.', 'error');
+		};
+	</script>
+</blog-test>

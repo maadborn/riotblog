@@ -63,10 +63,7 @@
 		function reactToAuthentication() { 
 			tag.isAuthenticated = true;
 			tag.update();
-			
-			setTimeout(function() {
-				tag.close();
-			}, 2000);
+			tag.close();
 		}
 		
 		function reactToUnauthentication() { 

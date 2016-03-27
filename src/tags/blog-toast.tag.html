@@ -8,7 +8,13 @@
 			Success: 'success',
 			Warning: 'warning',
 			Error: 'error',
-			Info: 'info'
+			Info: 'info',
+			
+			hasKey: function(key) {
+				return Object.keys(this)
+					.map(function(key) { return key.toLowerCase(); })
+					.some(function(item) { return item === key; });
+			}
 		};
 		
 		var tag = this;
@@ -30,6 +36,7 @@
 		tag.showToast = showToast;
 		tag.hideToast = hideToast;
 		tag.truncate = truncate;
+		tag.parseType = parseType;
 		//tag.resetToDefaults = resetToDefaults;
 		tag.getTimeout = getTimeout;
 		
@@ -37,7 +44,7 @@
 		
 		function reactToShowToast(message, type) {
 			tag.message = tag.truncate(message || tag.defaultMessage);
-			tag.type = type || ToastType.Info;
+			tag.type = tag.parseType(type);
 			
 			tag.update();
 			
@@ -64,7 +71,6 @@
 		
 		function hideToast() {
 			tag.root.classList.remove('show');
-			tag.resetToDefaults();
 		}
 		
 		function truncate(text) {
@@ -78,13 +84,13 @@
 			return text;
 		}
 		
-		// function resetToDefaults() {
-		// 	//debugger;
-		// 	if (!tag.timeoutToken) {
-		// 		// tag.message = tag.defaultMessage;
-		// 		// tag.type = tag.defaultType;
-		// 	}
-		// }
+		function parseType(type) {
+			if (!ToastType.hasKey(type)) {
+				console.warn('blog-toast: type not valid', type);
+				return ToastType.Info;
+			}
+			return type;
+		}
 		
 		function getTimeout(text) {
 			var wordCount = text.split(' ').length;

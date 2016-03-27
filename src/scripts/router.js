@@ -24,6 +24,10 @@ export default {
 		riot.route('/new-post', () => {
 			riot.mount(this.contentMountPoint, 'blog-edit', { isNew: true });
 		});
+		
+		riot.route('/test', () => {
+			riot.mount(this.contentMountPoint, 'blog-test');
+		});
 
 		riot.route.start(true);
 	},

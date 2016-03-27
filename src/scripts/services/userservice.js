@@ -2,23 +2,26 @@ import eventBus from '../eventbus';
 import AppEvents from '../appevents';
 
 const UserService = {
-	login(user, pw) {
-		console.log('logging in', user, pw);
-
+	login(username, pw) {
 		eventBus.trigger(AppEvents.State.Loading);
 		
-		let p = new Promise((resolve, reject) => {
+		// TODO: implementation
+		console.log('logging in', username, pw);
+		const p = new Promise((resolve, reject) => {
 			setTimeout(() => {
-				//reject('no no!');
-				resolve(`${user} logged in!`);
+				// reject('no no!');
+				resolve({
+					user: username,
+					token: 'asdf'
+				});
 			}, 1000);
 		});
 		
 		p.then((response) => {
-			console.log(response);
-			eventBus.trigger(AppEvents.State.Authenticated, user);
+			eventBus.trigger(AppEvents.Elements.Toast.Show, `Logged in as ${response.user}`, 'success');
+			eventBus.trigger(AppEvents.State.Authenticated, response.user);
 		}).catch((reason) => {
-			console.log('login failed:', reason);
+			eventBus.trigger(AppEvents.Elements.Toast.Show, `Login failed: ${reason}`, 'error');
 		}).then(() => {
 			eventBus.trigger(AppEvents.State.Loaded);
 		});
@@ -26,6 +29,7 @@ const UserService = {
 		return p;
 	},
 	logout() {
+		// TODO: implementation
 		console.log('logging out');
 		eventBus.trigger(AppEvents.State.Unauthenticated);
 	}

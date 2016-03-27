@@ -41,7 +41,7 @@ const DataService = {
 			eventBus.trigger(AppEvents.Data.Posts.Updated);
 			return true;
 		}).catch((message) => {
-			console.error(message);
+			eventBus.trigger(AppEvents.Elements.Toast.Show, message, 'error');
 			return false;
 		}).then((success) => {
 			eventBus.trigger(AppEvents.State.Loaded);
