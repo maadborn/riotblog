@@ -38,8 +38,9 @@ var paths = {
 // Prepare scripts for package/distribution/browser
 function compile(watch) {
     var bundler = browserify(paths.scripts.bundleEntry, { debug: true })
-        .transform(babelify.configure({ presets: ['es2015'] }))
-        .transform(riotify, { ext: '.tag.html' });
+        .transform(babelify)
+        .transform(riotify, { ext: 'tag.html', type: 'babel' })
+		;
 	
     var watcher = watch ? watchify(bundler) : '';
 

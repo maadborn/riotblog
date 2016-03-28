@@ -154,6 +154,12 @@ And finally you add the mixin to your tag:
 		</script>
 	</my-tag>
 
+#### Q: I'm trying out `<script type="babel">` but it won't transpile my tag scripts. ####
+
+A: Follow the instructions found in the Riot docs [here](http://riotjs.com/guide/compiler/#pre-processors). As mentioned there, Babel 6 made some changes which demands some work on your end, but it should work if those steps are followed. Don't forget to install `babel-core` as a global package. If you are using [riotify](https://github.com/jhthorsen/riotify) and gulp like I did, don't forget to pass an options object like this:
+
+	.transform(riotify, { type: 'babel' }) 
+
 ---
 
 #### Q: ####

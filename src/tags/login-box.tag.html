@@ -1,8 +1,8 @@
 <login-box>
 	<button type="button" class="close" onclick="{ close }" title="Close">×</button>
 	<form name="loginform" class="loginform" onsubmit="{ submitLogin }" hide="{ isAuthenticated }">
-		<input name="username" type="text" placeholder="Username"></input>
-		<input name="password" type="password" placeholder="Password"></input>
+		<input name="username" type="text" placeholder="Username" required></input>
+		<input name="password" type="password" placeholder="Password" required></input>
 		<button type="submit">Login</button>
 	</form>
 	<form name="logoutform" class="loginform" onsubmit="{ submitLogout }" show="{ isAuthenticated }">
