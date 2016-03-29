@@ -7,7 +7,7 @@ const UserService = {
 		
 		// TODO: implementation
 		console.log('logging in', username, pw);
-		const p = new Promise((resolve, reject) => {
+		const p = new Promise((resolve /* , reject*/) => {
 			setTimeout(() => {
 				// reject('no no!');
 				resolve({

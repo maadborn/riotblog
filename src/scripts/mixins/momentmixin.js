@@ -1,5 +1,5 @@
-import _moment from 'moment';
+import moment from 'moment';
 
 export default {
-	moment: _moment
+	moment,
 };

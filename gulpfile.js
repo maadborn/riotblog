@@ -73,7 +73,6 @@ function watch() {
     return compile(true);
 };
 
-
 /*** TASKS ***/
 
 // Clean built distribution files == delete dist directory

@@ -1,6 +1,6 @@
 import riot from 'riot';
 
-function EventBusFactory() {
+function eventBusFactory() {
 	const bus = riot.observable({});
 	
 	bus.on('*', (event) => {
@@ -15,8 +15,9 @@ function EventBusFactory() {
 	};
 }
 
-if (!window._EventBusFactory) {
-	window._EventBusFactory = EventBusFactory();
+// We want a singleton instance so there is only one eventbus in our app
+if (!window._eventBusFactory) {
+	window._eventBusFactory = eventBusFactory();
 }
 
-export default window._EventBusFactory.create();
+export default window._eventBusFactory.create();
