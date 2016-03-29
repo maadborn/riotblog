@@ -19,7 +19,7 @@ import '../tags/blog-posts.tag.html';
 import '../tags/login-box.tag.html';
 import '../tags/load-indicator.tag.html';
 import '../tags/blog-toast.tag.html';
-import '../tags/blog-test.tag.html';
+import '../tags/blog-test/blog-test.tag.html';
 
 export default {
 	router: null,
