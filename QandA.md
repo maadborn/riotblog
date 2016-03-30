@@ -160,6 +160,24 @@ A: Follow the instructions found in the Riot docs [here](http://riotjs.com/guide
 
 	.transform(riotify, { type: 'babel' }) 
 
+#### Q: So, my tag is containing quite a bit of markup, logic and styling. It's getting hard to manage. What can I do? ####
+
+A: My take on this is to split your tag into three main parts, each in their own file: the tag container file, the logic file and the style file. 
+
+Take everything inside the `script` element and move it to the tag logic file, \[tag-name\].js. Export this content as an object from here, and inside the script tag in the tag container file, `require` or `import` the object you exported. Then just extend `this` with the imported object using e.g. `Object.assign`. 
+
+In the same manner as you extracted the scripts from the tag container file, you can do the same with the `style` element's content and move it to another \[tag-name\].css. If you want to use LESS, SASS or some other tool, this will probably be the preferred way to get your tag styles into the fold.
+
+Put these three files inside a folder named as the tag is named, and Bob's your uncle!
+
+These steps are more or less dependent on you having a build step in your project, where you could transpile your scripts from your preferred language or superset to Javascript, and your styles from your favourite preprocessor to CSS. Given your familiarity with such tools and the size of your project, choosing none, either or both of these kinds of browser-unware-to-browser-aware compilation techniques, is something you must make up your own mind about.   
+
+By splitting the markup, the logic and the styling in their own files, you acheive a separation of concerns which has been promoted in web development for a long time. No web developer of 2016 writes entire applications in a single file with a `style` element at the top, a `script` element at the bottom and lot of markup in-between. But Riot lets your merge all this back into a single file, which is giving one a fast and easy way of creating components from scratch. But as your tags' sizes and project complexity increases, it might prove difficult to control and overview if the entire tag is found in a single file. The tag might have evolved from a simple app-styled input tag, to a full-featured autocomplete element. Walking along this path, you might realize that separating the tag into different files with their specific purposes is a necessity for your own sanity. There are hardly any reason to fight common reason and knowledge on how to keep your codebase maintainable by not adhering to the principles of SOLID. 
+
+On the other hand you might argue for the FIRST principles, and keeping the size of your tags down to a minimum by splitting them into smaller parts which make up for larger components. While I suppose this is a sound thought, I suspect it might prove more difficult than imagined, especially if you build your entire application of custom tags. There will always have to be a line between architecting the perfectly maintainable software and the productivity to reach the release date with something that works to your given specifications.
+
+IDEs and editors will probably not have support for the Riot tag format of structuring the tag file, leaving you without auto-completion features, linting, etc. This is gained again by putting Javascript in a .js file, HTML in the .tag file and styles in the .css/.less/.scss file.   
+
 ---
 
 #### Q: ####
