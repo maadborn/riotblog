@@ -1,0 +1,19 @@
+<blog-edit>
+	<h3>{ headerText }</h3>
+	<form onsubmit="{ send }">
+		<button type="submit" class="right" tabindex="10">Submit</button>
+		<input type="text" name="postTitle" class="post-title" placeholder="Title..." title="Title" tabindex="1"/>
+		<blog-editor name="editor" options="{ { tabindex: 2 } }"/>
+	</form>
+	<script>
+		import tag from './blog-edit';
+		Object.assign(this, tag);
+		this.init();
+	</script>
+	<style scoped>
+		.post-title {
+			width: 80%;
+			font-size: 1.2rem;
+		}
+	</style>
+</blog-edit>

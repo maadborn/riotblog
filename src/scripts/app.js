@@ -8,18 +8,18 @@ import momentMixin	from './mixins/momentmixin';
 import userSvcMixin	from './mixins/userservicemixin';
 import dataSvcMixin	from './mixins/dataservicemixin';
 
-import '../tags/parsed-html.tag.html';
-import '../tags/blog-about.tag.html';
-import '../tags/blog-app.tag.html';
-import '../tags/blog-nav.tag.html';
-import '../tags/blog-edit.tag.html';
-import '../tags/blog-editor.tag.html';
-import '../tags/blog-post.tag.html';
-import '../tags/blog-posts.tag.html';
-import '../tags/login-box.tag.html';
-import '../tags/load-indicator.tag.html';
-import '../tags/blog-toast.tag.html';
+import '../tags/blog-app/blog-app.tag.html';
+import '../tags/blog-about/blog-about.tag.html';
+import '../tags/blog-edit/blog-edit.tag.html';
+import '../tags/blog-editor/blog-editor.tag.html';
+import '../tags/blog-nav/blog-nav.tag.html';
+import '../tags/blog-post/blog-post.tag.html';
+import '../tags/blog-posts/blog-posts.tag.html';
+import '../tags/blog-toast/blog-toast.tag.html';
 import '../tags/blog-test/blog-test.tag.html';
+import '../tags/load-indicator/load-indicator.tag.html';
+import '../tags/login-box/login-box.tag.html';
+import '../tags/parsed-html/parsed-html.tag.html';
 
 export default {
 	router: null,
