@@ -1,7 +1,7 @@
-import _dataService from '../services/dataservice';
+import dataService from '../services/dataservice';
 
 const DataServiceMixin = {
-	dataService: _dataService
+	dataService
 };
 
 export default DataServiceMixin;

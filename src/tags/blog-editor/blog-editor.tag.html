@@ -2,14 +2,8 @@
 	<textarea name="editorContent" class="editor" placeholder="Post..." onchange="{ textChange }" tabindex="{ opts.options.tabindex }"></textarea>
 
 	<script>
-		var tag = this;
-		
-		tag.text = '';
-		tag.textChange = textChange;
-		
-		function textChange() {
-			tag.text = tag.editorContent.value;
-		}
+		import tag from './blog-editor';
+		Object.assign(this, tag);
 	</script>
 
 	<style scoped>
