@@ -9,15 +9,12 @@
 	<div class="post-actions"></div>
 
 	<script>
-		// Note: parent is referred in the parsed-html as it takes a yield expression, 
+		// Note: parent is referred in the parsed-html as it takes a yield expression,
 		// which sets the context to the parent (this one) tag
 		
-		var tag = this;
-		
-		tag.mixin('momentMixin');
-		
-		tag.relativeTime = this.moment(opts.post.time).fromNow();
-		tag.absoluteTime = this.moment(opts.post.time).format('YYYY-MM-DD HH:mm');
+		import tag from './blog-post';
+		Object.assign(this, tag);
+		this.init();
 	</script>
 
 	<style scoped>
