@@ -11,33 +11,9 @@
 	</nav>
 
 	<script>
-		var tag = this;
-		
-		tag.toggleLoginBox = toggleLoginBox;
-		tag.logXText = 'Login';
-		tag.reactToAuthentication = reactToAuthentication;
-		tag.reactToUnauthentication = reactToUnauthentication;
-		
-		tag.eventBus.on(tag.AppEvents.State.Authenticated, tag.reactToAuthentication);
-		tag.eventBus.on(tag.AppEvents.State.Unauthenticated, tag.reactToUnauthentication);
-		
-		/* Implementations */
-		
-		function toggleLoginBox(event) {
-			tag.eventBus.trigger(tag.AppEvents.Elements.LoginBox.Toggle);
-			return false;
-		};
-		
-		function reactToAuthentication() {
-			tag.logXText = 'Logout';
-			tag.update();
-		}
-		
-		function reactToUnauthentication() { 
-			tag.logXText = 'Login';
-			tag.update();
-		}
-		
+		import tag from './blog-nav';
+		Object.assign(this, tag);
+		this.init();		
 	</script>
 
 	<style scoped>

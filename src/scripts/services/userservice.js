@@ -30,8 +30,8 @@ const UserService = {
 	},
 	logout() {
 		// TODO: implementation
-		console.log('logging out');
 		eventBus.trigger(AppEvents.State.Unauthenticated);
+		eventBus.trigger(AppEvents.Elements.Toast.Show, 'Logged out', 'success');
 	}
 };
 
