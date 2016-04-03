@@ -11,67 +11,9 @@
 	</form>
 
 	<script>
-		var tag = this;
-		
-		tag.mixin('userServiceMixin');
-		
-		tag.isAuthenticated = false;
-		tag.isOpen = isOpen;
-		tag.toggle = toggle;
-        tag.open = open;
-		tag.close = close;
-		tag.submitLogin = submitLogin;
-		tag.submitLogout = submitLogout;
-		tag.reactToAuthentication = reactToAuthentication;
-		tag.reactToUnauthentication = reactToUnauthentication;
-		
-		tag.eventBus.on(tag.AppEvents.Elements.LoginBox.Toggle, tag.toggle);
-		tag.eventBus.on(tag.AppEvents.State.Authenticated, tag.reactToAuthentication);
-		tag.eventBus.on(tag.AppEvents.State.Unauthenticated, tag.reactToUnauthentication);
-		
-		/* Implementations */
-		
-        function isOpen() {
-            return (tag.root.style.display != 'none');
-        };
-		
-		function toggle() {
-            if (tag.isOpen()) {
-                tag.close();
-            } else {
-                tag.open();
-            }
-		};
-        
-        function open() {
-            tag.root.style.display = '';
-			tag.username.focus();
-        };
-        
-        function close() {
-            tag.root.style.display = 'none';
-        };
-
-		function submitLogin(event) {
-			tag.userService.login(tag.username.value, tag.password.value);
-		};
-		
-		function submitLogout(event) {
-			tag.userService.logout(tag.username.value);
-		};
-		
-		function reactToAuthentication() { 
-			tag.isAuthenticated = true;
-			tag.update();
-			tag.close();
-		}
-		
-		function reactToUnauthentication() { 
-			tag.isAuthenticated = false;
-			tag.update();
-			tag.close();
-		}
-        
+		import tag from './login-box';
+		Object.assign(this, tag);
+		this.init();
 	</script>
 
 	<style scoped>
