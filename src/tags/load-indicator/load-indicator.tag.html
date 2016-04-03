@@ -7,18 +7,9 @@
 	<!--<div name="spinner" class="spinner">&#9788;</div>-->
 	
 	<script>
-		var tag = this;
-		
-		tag.eventBus.on(tag.AppEvents.State.Loading, loading);
-		tag.eventBus.on(tag.AppEvents.State.Loaded, loaded);
-		
-		function loading() {
-			tag.root.style.display = 'flex'; //'block';
-		};
-		
-		function loaded() {
-			tag.root.style.display = 'none';
-		};
+		import tag from './load-indicator';
+		Object.assign(this, tag);
+		this.init();
 	</script>
 	
 	<style scoped>
