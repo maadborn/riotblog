@@ -11,9 +11,10 @@ html {
 	}
 }
 
+
 body {
 	margin: 0;
-	width: 100%;
+	padding: 0;
 }
 
 .test {
@@ -37,10 +38,7 @@ a {
 }
 	
 	a:hover {
-/*		color: #163;
-		text-shadow: 0 0 1px #eee;*/
 		background-color: #7FC9FF;
-		/*color: white;*/
 	}
 
 button {
@@ -65,7 +63,5 @@ textarea {
 }
 
 .right {
-	/*position: absolute;
-	right: 0;*/
 	float: right;
 }

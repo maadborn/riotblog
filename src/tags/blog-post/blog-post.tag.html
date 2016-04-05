@@ -1,8 +1,8 @@
 <blog-post>
-	<h3>{ opts.post.title }</h3>
 	<div class="post-meta">
 		<div class="post-time" title="{ absoluteTime }">{ relativeTime }</div>
 	</div>
+	<h3>{ opts.post.title }</h3>
 	<div name="postBody" class="post-content">
 		<parsed-html>{ parent.opts.post.body }</parsed-html> 
 	</div>
@@ -32,22 +32,18 @@
 			border-bottom: none;
 		}
 		
-		h3 {
-			color: #333;
-		}
-		
 		.post-meta {
 			font-size: 0.8rem;
 			font-style: italic;
 			color: #888;
-			margin: -1em 0 0.5em 0;
+			margin: 1em 0 1em 0;
 			position: relative;
 			height: 1em;
 		}
 		
 		.post-time {
-			position: absolute;
-			right: 0;
+			/*position: absolute;
+			right: 0;*/
 		}
 	</style>
 </blog-post>

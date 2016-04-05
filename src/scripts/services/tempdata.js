@@ -14,6 +14,46 @@ export default {
 				+ 'quis incidunt. Autem accusantium recusandae, quis obcaecati eveniet inventore. '
 				+ 'Fugit explicabo obcaecati, voluptate repellat vel, asperiores deserunt facere '
 				+ 'saepe iste est.'
+		},
+		{
+			title: 'Hello again!',
+			time: new Date(2016, 2, 3, 12, 34),
+			body: 'Blanditiis laboriosam impedit quibusdam sit, dicta eaque tempore, aliquam '
+				+ 'quis incidunt. Autem accusantium recusandae, quis obcaecati eveniet inventore. '
+				+ 'Fugit explicabo obcaecati, voluptate repellat vel, asperiores deserunt facere '
+				+ 'saepe iste est.'
+		},
+		{
+			title: 'Hello again!',
+			time: new Date(2016, 2, 3, 12, 34),
+			body: 'Blanditiis laboriosam impedit quibusdam sit, dicta eaque tempore, aliquam '
+				+ 'quis incidunt. Autem accusantium recusandae, quis obcaecati eveniet inventore. '
+				+ 'Fugit explicabo obcaecati, voluptate repellat vel, asperiores deserunt facere '
+				+ 'saepe iste est.'
+		},
+		{
+			title: 'Hello again!',
+			time: new Date(2016, 2, 3, 12, 34),
+			body: 'Blanditiis laboriosam impedit quibusdam sit, dicta eaque tempore, aliquam '
+				+ 'quis incidunt. Autem accusantium recusandae, quis obcaecati eveniet inventore. '
+				+ 'Fugit explicabo obcaecati, voluptate repellat vel, asperiores deserunt facere '
+				+ 'saepe iste est.'
+		},
+		{
+			title: 'Hello again!',
+			time: new Date(2016, 2, 3, 12, 34),
+			body: 'Blanditiis laboriosam impedit quibusdam sit, dicta eaque tempore, aliquam '
+				+ 'quis incidunt. Autem accusantium recusandae, quis obcaecati eveniet inventore. '
+				+ 'Fugit explicabo obcaecati, voluptate repellat vel, asperiores deserunt facere '
+				+ 'saepe iste est.'
+		},
+		{
+			title: 'Hello again!',
+			time: new Date(2016, 2, 3, 12, 34),
+			body: 'Blanditiis laboriosam impedit quibusdam sit, dicta eaque tempore, aliquam '
+				+ 'quis incidunt. Autem accusantium recusandae, quis obcaecati eveniet inventore. '
+				+ 'Fugit explicabo obcaecati, voluptate repellat vel, asperiores deserunt facere '
+				+ 'saepe iste est.'
 		}
 	]
 };

@@ -7,9 +7,9 @@
 		<blog-nav></blog-nav>
 	</header>
 
-	<div id="content" class="content"></div>
+	<main id="content" class="content"></main>
 
-	<footer></footer>
+	<footer>...</footer>
 
 	<script>
 	</script>
@@ -17,13 +17,14 @@
 	<style scoped>
 		:scope {
 			display: block;
-			position: relative;
 			margin: 0 auto;
-			/*padding: 15px;*/
-			height: 100%;
 			width: 100%;
 			box-sizing: border-box;
 			background-color: #f3f3f3;
+			
+			display: flex;
+			min-height: 100vh;
+			flex-direction: column;
 		}
 		
 		@media (min-width: 700px) {
@@ -45,6 +46,17 @@
 		
 		.content,
 		.main-heading {
+			padding: 15px;
+		}
+		
+		.content {
+			flex: 1;
+		}
+		
+		footer {
+			background-color: #28c;
+			color: white;
+			height: 60px;
 			padding: 15px;
 		}
 	</style>
