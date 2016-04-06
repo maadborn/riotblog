@@ -7,11 +7,12 @@ var buffer      = require('vinyl-buffer');
 var babelify    = require('babelify');
 var watchify    = require('watchify');
 var browserify  = require('browserify');
-var browserSync = require('browser-sync');
+var browsersync = require('browser-sync');
 var sourcemaps  = require('gulp-sourcemaps');
 var riotify     = require('riotify');
 var changed     = require('gulp-changed');
 var del         = require('del');
+var sass		= require('gulp-sass');
 
 // Paths object
 var paths = {
@@ -25,14 +26,16 @@ var paths = {
     styles: {
         src: './src/styles/*.css',
         dest: './dist/styles',
-        distGlob: './dist/**/*.css'
+        distGlob: './dist/**/*.css',
+		sassSrc: ['./src/styles/**/*.scss', './src/tags/**/*.scss']
     },
     html: {
         src: './src/*.html',
         dest: './dist',
         distGlob: './dist/**/*.html'
     },
-    clean: './dist/**'
+    clean: './dist/**',
+	browsersyncBaseDir: './dist'
 };
 
 // Prepare scripts for package/distribution/browser
@@ -48,7 +51,7 @@ function compile(watch) {
         watcher.on('update', function () {
             gutil.log('Bundling...');
             rebundle()
-                .pipe(browserSync.stream({ once: true }));
+                .pipe(browsersync.stream({ once: true }));
         });
     }
 
@@ -58,7 +61,7 @@ function compile(watch) {
         return bundler.bundle()
             .on('error', function(err) { 
 				gutil.log('Bundle error: ' /* + err.message + '\n'*/ + err);  
-                browserSync.notify('Browserify error!');
+                browsersync.notify('Browserify error!');
                 this.emit('end'); 
             })
             .pipe(source(paths.scripts.bundleFilename))
@@ -87,6 +90,13 @@ gulp.task('styles', function() {
         .pipe(gulp.dest(paths.styles.dest));
 });
 
+gulp.task('sass', function() {
+	return gulp.src(paths.styles.sassSrc)
+		.pipe(sass().on('error', sass.logError))
+		.pipe(gulp.dest(paths.styles.dest))
+		.pipe(browsersync.stream());
+});
+
 // Html move task
 gulp.task('html', function() {
     return gulp.src(paths.html.src)
@@ -101,19 +111,20 @@ gulp.task('build', ['styles', 'html'], function () {
 });
 
 // Watch sources for development
-gulp.task('watch', ['styles', 'html'], function () {  
+gulp.task('watch', ['styles', 'html', 'sass'], function () {  
     gulp.watch(paths.html.src, ['html']);
     gulp.watch(paths.styles.src, ['styles']);
+	gulp.watch(paths.styles.sassSrc, ['sass']);
     return watch(); 
 });
 
-// BrowserSync task 
-gulp.task('browserSync', ['watch'], function () {
-    gutil.log('Starting BrowserSync...');
-    browserSync.init({
+// browsersync task 
+gulp.task('browsersync', ['watch'], function () {
+    gutil.log('Starting browsersync...');
+    browsersync.init({
         files: [paths.html.distGlob, paths.styles.distGlob],
         server: { 
-            baseDir: './dist'
+            baseDir: paths.browsersyncBaseDir
         },
         open: false
     });
@@ -121,4 +132,4 @@ gulp.task('browserSync', ['watch'], function () {
 
 // Bundle, transform and move files for distribution, then serve from the ./dist directory
  
-gulp.task('default', ['browserSync']);
+gulp.task('default', ['browsersync']);
