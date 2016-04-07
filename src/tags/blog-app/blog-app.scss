@@ -1,0 +1,46 @@
+blog-app {
+	& {
+		display: block;
+		margin: 0 auto;
+		width: 100%;
+		box-sizing: border-box;
+		background-color: #f3f3f3;
+		
+		display: flex;
+		min-height: 100vh;
+		flex-direction: column;
+	}
+	
+	@media (min-width: 700px) {
+		& {
+			width: 700px;
+		}
+	}
+	
+	.main-heading {
+		color: #069;
+		margin-top: 0;
+		margin-bottom: 0;
+	}
+	
+	.main-heading a {
+		color: #069;
+		background-color: transparent;
+	}
+	
+	.content,
+	.main-heading {
+		padding: 15px;
+	}
+	
+	.content {
+		flex: 1;
+	}
+	
+	footer {
+		background-color: #28c;
+		color: white;
+		height: 60px;
+		padding: 15px;
+	}
+}

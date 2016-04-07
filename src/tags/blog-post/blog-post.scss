@@ -1,0 +1,27 @@
+blog-post {
+	& {
+		display: block;
+		border-bottom: 1px dotted #ccc;
+		padding: 1em 0 2em 0;
+	}
+	
+	&:first-child {
+		padding-top: 0;
+	}
+	
+	&:last-child {
+		border-bottom: none;
+	}
+	
+	.post-meta {
+		font-size: 0.8rem;
+		font-style: italic;
+		color: #888;
+		margin: 1em 0 1em 0;
+		position: relative;
+		height: 1em;
+	}
+	
+	.post-time {
+	}
+}
