@@ -1,7 +1,7 @@
 import riot			from 'riot';
 import dataService 	from './services/dataservice';
 
-export default {
+const Router = {
 	contentSelector: null,
 
 	init(contentSelector) {
@@ -12,21 +12,21 @@ export default {
 		});
 
 		riot.route('/home', () => {
-			riot.mount(this.contentMountPoint, 'blog-posts', {
+			this.setMainContentTo('blog-posts', {
 				posts: dataService.getPosts()
 			});
 		});
 
 		riot.route('/about', () => {
-			riot.mount(this.contentMountPoint, 'blog-about');
+			this.setMainContentTo('blog-about');
 		});
 		
 		riot.route('/new-post', () => {
-			riot.mount(this.contentMountPoint, 'blog-edit', { isNew: true });
+			this.setMainContentTo('blog-edit', { isNew: true });
 		});
 		
 		riot.route('/test', () => {
-			riot.mount(this.contentMountPoint, 'blog-test');
+			this.setMainContentTo('blog-test');
 		});
 
 		riot.route.start(true);
@@ -34,5 +34,20 @@ export default {
 
 	get contentMountPoint() {
 		return document.getElementById(this.contentSelector);
-	}
+	},
+	
+	setMainContentTo(tag, options) {
+		function empty(node) {
+			while (node.firstChild) {
+				node.removeChild(node.firstChild);
+			}
+		}
+		
+		const elem = document.createElement(tag);
+		empty(this.contentMountPoint);
+		this.contentMountPoint.appendChild(elem);
+		riot.mount(elem, tag, options);
+	},
 };
+
+export default Router;
