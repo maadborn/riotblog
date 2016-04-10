@@ -20,26 +20,30 @@ var autoprefix 	= require('gulp-autoprefixer');
 // Paths object
 var paths = {
     scripts: {
-        bundleEntry: './src/scripts/boot.js',
-        bundleDest: './dist/scripts',
+        bundleEntry: './src/client/scripts/boot.js',
+        bundleDest: './dist/public/scripts',
         bundleFilename: 'bundle.js',
         sourceMapDest: './dist/scripts/bundle.js.map',
-        sourceMapFilename: 'bundle.js.map'
+        sourceMapFilename: 'bundle.js.map',
     },
     styles: {
-        src: ['./src/styles/*.css'],
-        dest: './dist/styles',
+        src: ['./src/client/styles/*.css'],
+        dest: './dist/public/styles',
         distGlob: './dist/**/*.css',
-		sassSrc: ['./src/styles/**/*.scss', './src/tags/**/*.scss'],
-		mergedStyleFile: 'app.css'
+		sassSrc: ['./src/client/styles/**/*.scss', './src/client/tags/**/*.scss'],
+		mergedStyleFile: 'app.css',
     },
     html: {
-        src: './src/*.html',
-        dest: './dist',
-        distGlob: './dist/**/*.html'
+        src: './src/client/*.html',
+        dest: './dist/public',
+        distGlob: './dist/**/*.html',
     },
     clean: './dist/**',
-	browsersyncBaseDir: './dist'
+	browsersyncBaseDir: './dist/public',
+	server: {
+		src: './src/server/**',
+		dest: './dist',
+	},
 };
 
 var sassOptions = {};
@@ -132,6 +136,13 @@ gulp.task('html', function() {
         // minify?
         .pipe(changed(paths.html.dest))
         .pipe(gulp.dest(paths.html.dest));
+});
+
+// Server move task
+gulp.task('moveServer', function() {
+    return gulp.src(paths.server.src)
+        .pipe(changed(paths.server.dest))
+        .pipe(gulp.dest(paths.server.dest));
 });
 
 // Build for distrution
