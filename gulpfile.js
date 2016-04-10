@@ -16,6 +16,7 @@ var sass		= require('gulp-sass');
 var merge 		= require('merge-stream');
 var concat		= require('gulp-concat');
 var autoprefix 	= require('gulp-autoprefixer');
+var nodemon		= require('nodemon');
 
 // Paths object
 var paths = {
@@ -43,6 +44,11 @@ var paths = {
 	server: {
 		src: './src/server/**',
 		dest: './dist',
+		proxy: 'http://localhost:5000',
+		entry: './dist/server.js',
+		publicGlob: './dist/public/**/*.*',
+		nodemonWatch: ['dist'],
+		nodemonIgnore: ['dist/public'],
 	},
 };
 
@@ -50,7 +56,7 @@ var sassOptions = {};
 var autoprefixerOptions = {};
 var riotifyOptions = { 
 	ext: 'tag.html', 
-	type: 'babel' 
+	type: 'babel',
 };
 
 // Prepare scripts for package/distribution/browser
@@ -139,29 +145,30 @@ gulp.task('html', function() {
 });
 
 // Server move task
-gulp.task('moveServer', function() {
+gulp.task('serverSide', function() {
     return gulp.src(paths.server.src)
         .pipe(changed(paths.server.dest))
         .pipe(gulp.dest(paths.server.dest));
 });
 
 // Build for distrution
-gulp.task('build', ['styles', 'html'], function () { 
+gulp.task('build', ['styles', 'html', 'serverSide'], function () { 
     return compile(); 
 });
 
 // Watch sources for development
-gulp.task('watch', ['styles', 'html'], function () {  
+gulp.task('watch', ['styles', 'html', 'serverSide'], function () {  
     var stylesSrc = paths.styles.src.concat(paths.styles.sassSrc);
 	
 	gulp.watch(stylesSrc, ['styles']);
     gulp.watch(paths.html.src, ['html']);
+    gulp.watch(paths.server.src, ['serverSide']);
     
 	return watch(); 
 });
 
 // browsersync task 
-gulp.task('browsersync', ['watch'], function () {
+gulp.task('browsersyncOld', ['watch'], function () {
     gutil.log('Starting browsersync...');
     
 	browsersync.init({
@@ -174,5 +181,45 @@ gulp.task('browsersync', ['watch'], function () {
 });
 
 // Bundle, transform and move files for distribution, then serve from the ./dist directory
- 
+
+gulp.task('defaultOld', ['browsersyncOld']);
+
+
+//// NEW ////
+
+// nodemon task
+gulp.task('nodemon', function (cb) {
+	var started = false;
+	
+	return nodemon({
+		script: paths.server.entry,
+		watch: paths.server.dest,
+		ignore: paths.server.nodemonIgnore,
+	})
+	.on('start', function () {
+		gutil.log('Starting nodemon...');
+		// to avoid nodemon being started multiple times
+		if (!started) {
+			cb();
+			started = true; 
+		} 
+	})
+	.on('restart', function () {
+		gutil.log('Restarting nodemon...');
+	});
+});
+
+// browsersync task 
+gulp.task('browsersync', ['watch', 'nodemon'], function () {
+    gutil.log('Starting browsersync...');
+    
+	browsersync.init(null, {
+		proxy: paths.server.proxy,
+        files: [paths.server.publicGlob],
+        //browser: "google chrome",
+        port: 7000,
+        open: false,
+	});
+});
+
 gulp.task('default', ['browsersync']);
