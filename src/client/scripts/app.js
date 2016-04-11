@@ -1,3 +1,5 @@
+import './vendor/fetch';
+
 import riot 		from 'riot';
 import router		from './router';
 import eventBus 	from './eventbus';

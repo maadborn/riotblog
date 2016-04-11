@@ -44,8 +44,10 @@ const Router = {
 		}
 		
 		const elem = document.createElement(tag);
+		
 		empty(this.contentMountPoint);
 		this.contentMountPoint.appendChild(elem);
+		
 		riot.mount(elem, tag, options);
 	},
 };

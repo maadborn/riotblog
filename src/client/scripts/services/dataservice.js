@@ -1,5 +1,5 @@
 import riot			from 'riot';
-import tempdata		from './tempdata';
+// import tempdata		from './tempdata';
 import eventBus 	from '../eventbus';
 import AppEvents 	from '../appevents';
 
@@ -14,10 +14,13 @@ const DataService = {
 	posts: riot.observable([]),
 	
 	getPosts() {
-		setTimeout(() => {
-			this.posts.push(...tempdata.posts);
+		fetch('/api/posts')
+		.then((res) => res.json())
+		.then((json) => {
+			this.posts.length = 0;
+			this.posts.push(...json);
 			eventBus.trigger(AppEvents.Data.Posts.Updated);
-		}, 0);
+		});
 
 		return this.posts;
 	},
