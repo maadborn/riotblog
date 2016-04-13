@@ -1,14 +1,15 @@
 var path = require('path');
 
-var API_PREFIX = 'api';
-
 function prefixApi(api) {
-	var prefixedApi = api;
+	var API_PREFIX = '/api';
+	var prefixedApi = {};
 	
-	for (var key in object) {
-		if (object.hasOwnProperty(key)) {
-			var element = object[key];
-			var prefixedElement = path.join(API_PREFIX, element);
+	for (var key in api) {
+		if (api.hasOwnProperty(key)) {
+			var element = api[key];
+			var prefixedElement = path
+				.join(API_PREFIX, element)
+				.replace(/\\/g, '/');
 			prefixedApi[key] = prefixedElement;
 		}
 	}
@@ -17,7 +18,7 @@ function prefixApi(api) {
 }
 
 var api = {
-	posts: 'posts'
+	Posts: 'posts'
 };
 
 var prefixedApi = prefixApi(api);

@@ -50,6 +50,10 @@ var paths = {
 		nodemonWatch: ['dist'],
 		nodemonIgnore: ['dist/public'],
 	},
+	common: {
+		src: './src/common/**',
+		dest: './dist/common',		
+	},
 };
 
 var sassOptions = {};
@@ -145,24 +149,30 @@ gulp.task('html', function() {
 });
 
 // Server move task
-gulp.task('serverSide', function() {
+gulp.task('server', function() {
     return gulp.src(paths.server.src)
         .pipe(changed(paths.server.dest))
         .pipe(gulp.dest(paths.server.dest));
 });
 
+// Copmon move task
+gulp.task('common', function() {
+    return gulp.src(paths.common.src)
+        .pipe(changed(paths.common.dest))
+        .pipe(gulp.dest(paths.common.dest));
+});
+
 // Build for distrution
-gulp.task('build', ['styles', 'html', 'serverSide'], function () { 
+gulp.task('build', ['styles', 'html', 'server', 'common'], function () { 
     return compile(); 
 });
 
 // Watch sources for development
-gulp.task('watch', ['styles', 'html', 'serverSide'], function () {  
-    var stylesSrc = paths.styles.src.concat(paths.styles.sassSrc);
-	
-	gulp.watch(stylesSrc, ['styles']);
+gulp.task('watch', ['styles', 'html', 'server'], function () {  
+	gulp.watch([paths.styles.src, paths.styles.sassSrc], ['styles']);
     gulp.watch(paths.html.src, ['html']);
-    gulp.watch(paths.server.src, ['serverSide']);
+    gulp.watch(paths.server.src, ['server']);
+    gulp.watch(paths.common.src, ['common']);
     
 	return watch(); 
 });
@@ -176,7 +186,7 @@ gulp.task('browsersyncOld', ['watch'], function () {
         server: { 
             baseDir: paths.browsersyncBaseDir
         },
-        open: false
+        open: false,
     });
 });
 

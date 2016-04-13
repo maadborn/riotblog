@@ -2,6 +2,7 @@ import riot			from 'riot';
 // import tempdata		from './tempdata';
 import eventBus 	from '../eventbus';
 import AppEvents 	from '../appevents';
+import Api 			from '../../../common/api';
 
 const DataServiceValidator = {
 	validatePost(post) {
@@ -14,13 +15,13 @@ const DataService = {
 	posts: riot.observable([]),
 	
 	getPosts() {
-		fetch('/api/posts')
-		.then((res) => res.json())
-		.then((json) => {
-			this.posts.length = 0;
-			this.posts.push(...json);
-			eventBus.trigger(AppEvents.Data.Posts.Updated);
-		});
+		fetch(Api.Posts)
+			.then((res) => res.json())
+			.then((json) => {
+				this.posts.length = 0;
+				this.posts.push(...json);
+				eventBus.trigger(AppEvents.Data.Posts.Updated);
+			});
 
 		return this.posts;
 	},

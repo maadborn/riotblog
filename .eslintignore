@@ -1,1 +1,3 @@
 gulpfile.js
+src/client/scripts/vendor/*.js
+src/common/**/*.js
