@@ -108,15 +108,6 @@ gulp.task('clean', function() {
     del(paths.clean);
 });
 
-/*
-DEPRECATED, use 'styles' for a complete sass+css build
-gulp.task('stylesOld', function() {
-    return gulp.src(paths.styles.src)
-        //concat, autoprefix, minify
-        .pipe(gulp.dest(paths.styles.dest));
-});
-*/
-
 gulp.task('styles', function() {
 	var cssStream = gulp.src(paths.styles.src);
 	
@@ -129,16 +120,6 @@ gulp.task('styles', function() {
         .pipe(gulp.dest(paths.styles.dest))
 		.pipe(browsersync.stream());
 });
-
-/*
-DEPRECATED, use 'styles' for a complete sass+css build
-gulp.task('sass', function() {
-	return gulp.src(paths.styles.sassSrc)
-		.pipe(sass(sassOptions).on('error', sass.logError))
-		.pipe(gulp.dest(paths.styles.dest))
-		.pipe(browsersync.stream());
-});
-*/
 
 // Html move task
 gulp.task('html', function() {
@@ -168,7 +149,7 @@ gulp.task('build', ['styles', 'html', 'server', 'common'], function () {
 });
 
 // Watch sources for development
-gulp.task('watch', ['styles', 'html', 'server'], function () {  
+gulp.task('watch', ['styles', 'html', 'server', 'common'], function () {  
 	gulp.watch([paths.styles.src, paths.styles.sassSrc], ['styles']);
     gulp.watch(paths.html.src, ['html']);
     gulp.watch(paths.server.src, ['server']);
@@ -176,6 +157,24 @@ gulp.task('watch', ['styles', 'html', 'server'], function () {
     
 	return watch(); 
 });
+
+// Watch sources for development
+// gulp.task('bswatch', ['styles', 'html', 'server', 'common'], function () {  
+// 	gulp.watch([paths.styles.src, paths.styles.sassSrc], ['styles']);
+//     gulp.watch(paths.html.src, ['html']);
+//     gulp.watch(paths.server.src, ['server']);
+//     gulp.watch(paths.common.src, ['common']);
+    
+//     var bs = browsersync;
+    
+//     bs.watch(paths.styles.sassSrc).on('change', bs.reload);
+//     bs.watch(paths.styles.src).on('change', bs.reload);
+//     bs.watch(paths.html.src).on('change', bs.reload);
+//     bs.watch(paths.server.src).on('change', bs.reload);
+//     bs.watch(paths.common.src).on('change', bs.reload);
+    
+// 	return watch(); 
+// });
 
 // browsersync task 
 gulp.task('browsersyncOld', ['watch'], function () {
@@ -191,9 +190,7 @@ gulp.task('browsersyncOld', ['watch'], function () {
 });
 
 // Bundle, transform and move files for distribution, then serve from the ./dist directory
-
 gulp.task('defaultOld', ['browsersyncOld']);
-
 
 //// NEW ////
 
@@ -226,7 +223,6 @@ gulp.task('browsersync', ['watch', 'nodemon'], function () {
 	browsersync.init(null, {
 		proxy: paths.server.proxy,
         files: [paths.server.publicGlob],
-        //browser: "google chrome",
         port: 7000,
         open: false,
 	});

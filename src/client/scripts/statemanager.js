@@ -32,11 +32,9 @@ const StateManager = {
 	get state() {
 		return this.stateData.state;
 	},
-	
 	hasState(state) {
 		return !!(this.state & state);
 	},
-	
 	saveStateData() {
 		if (localStorage && localStorage.setItem && this.stateData) {
 			localStorage.setItem(stateStorageKey, this.stateData);
@@ -51,7 +49,6 @@ const StateManager = {
 			}
 		}
 	},
-	
 	// Add testing ffs!
 	addState(state) {
 		this.state = this.state | state;
@@ -62,7 +59,6 @@ const StateManager = {
 		// Then XOR the masked state with the stored state to only try to remove that state.
 		this.state = (this.state & state) ^ this.state;
 	},
-	
 	addStateData(key, data) {
 		if (this.stateData[key] === undefined) {
 			throw new Error(

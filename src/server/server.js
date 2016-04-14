@@ -21,4 +21,3 @@ app.get(Api.Posts, (req, res) => {
 
 app.listen(5000);
 console.log('server listening');
-console.log(Api);
