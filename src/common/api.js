@@ -1,4 +1,4 @@
-var path = require('path');
+const path = require('path');
 
 function prefixApi(api) {
 	var API_PREFIX = '/api';
@@ -9,7 +9,7 @@ function prefixApi(api) {
 			var element = api[key];
 			var prefixedElement = path
 				.join(API_PREFIX, element)
-				.replace(/\\/g, '/');
+				.replace(/\\/g, '/');	// fix: windows turns / to \\
 			prefixedApi[key] = prefixedElement;
 		}
 	}
@@ -17,10 +17,12 @@ function prefixApi(api) {
 	return prefixedApi;
 }
 
-var api = {
-	Posts: 'posts'
+const api = {
+	Posts: 'posts',
+	Login: 'login',
+	Logout: 'logout',
 };
 
-var prefixedApi = prefixApi(api);
+const prefixedApi = prefixApi(api);
 
 module.exports = prefixedApi;

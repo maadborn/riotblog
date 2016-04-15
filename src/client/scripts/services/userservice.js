@@ -1,5 +1,6 @@
 import eventBus from '../eventbus';
 import AppEvents from '../appevents';
+import Api from '../../../common/api';
 
 const UserService = {
 	login(username, pw) {
@@ -7,15 +8,24 @@ const UserService = {
 		
 		// TODO: implementation
 		console.log('logging in', username, pw);
-		const p = new Promise((resolve /* , reject*/) => {
-			setTimeout(() => {
-				// reject('no no!');
-				resolve({
-					user: username,
-					token: 'asdf'
-				});
-			}, 1000);
-		});
+		// const p = new Promise((resolve /* , reject*/) => {
+		// 	setTimeout(() => {
+		// 		// reject('no no!');
+		// 		resolve({
+		// 			user: username,
+		// 			token: 'asdf'
+		// 		});
+		// 	}, 1000);
+		// });
+		
+		const data = new FormData();
+		data.append('json', JSON.stringify({ username, pw }));
+		
+		const p = fetch(Api.Login, {
+			method: 'post',
+			body: data,
+		})
+			.then((res, a, b) => { debugger; });
 		
 		p.then((response) => {
 			eventBus.trigger(AppEvents.Elements.Toast.Show, `Logged in as ${response.user}`, 'success');

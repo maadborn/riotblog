@@ -11,13 +11,23 @@ app.get('/', (req, res) => {
 	res.sendFile('./public/index.html');
 });
 
-// TODO create api object to be shared by client and server, no magic connection strings needed
 app.get(Api.Posts, (req, res) => {
 	// Get data, sort data with newest post first
 	// TODO move to business layer
 	const data = tempdata.posts.sort((a, b) => b.time - a.time);
-	res.send(data);
+	res.json(data);
+});
+
+app.post(Api.Login, (req, res) => {
+	// TODO move to business layer
+	console.log(req.params);
+	
+	const data = {
+		success: true,
+		user: req.params.username,
+		token: 'asdfasdf',
+	};
+	res.json(data);
 });
 
 app.listen(5000);
-console.log('server listening');
