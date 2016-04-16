@@ -18,21 +18,27 @@ const UserService = {
 		// 	}, 1000);
 		// });
 		
-		const data = new FormData();
-		data.append('json', JSON.stringify({ username, pw }));
-		
 		const p = fetch(Api.Login, {
 			method: 'post',
-			body: data,
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({ username, pw }),
 		})
-			.then((res, a, b) => { debugger; });
-		
-		p.then((response) => {
-			eventBus.trigger(AppEvents.Elements.Toast.Show, `Logged in as ${response.user}`, 'success');
-			eventBus.trigger(AppEvents.State.Authenticated, response.user);
-		}).catch((reason) => {
+		.then((res) => res.json())
+		.then((json) => {
+			if (json.success) {
+				eventBus.trigger(AppEvents.Elements.Toast.Show, `Logged in as ${json.user}`, 'success');
+				eventBus.trigger(AppEvents.State.Authenticated, json.user);
+			} else {
+				eventBus.trigger(AppEvents.Elements.Toast.Show, `Login failed: ${json.reason}`, 'error');
+			}
+		})
+		.catch((reason) => {
 			eventBus.trigger(AppEvents.Elements.Toast.Show, `Login failed: ${reason}`, 'error');
-		}).then(() => {
+		})
+		.then(() => {
 			eventBus.trigger(AppEvents.State.Loaded);
 		});
 		

@@ -1,11 +1,16 @@
+'use strict';
+
 // simple express server
-const express 	= require('express');
-const app 		= express();
+const express 		= require('express');
+const bodyParser 	= require('body-parser');
+const app 			= express();
 // const router 	= express.Router();
-const tempdata 	= require('./tempdata');
-const Api		= require('./common/api');
+const tempdata 		= require('./tempdata');
+const Api			= require('./common/api');
 
 app.use(express.static(`${__dirname}/public`));
+app.use(bodyParser.json());
+
 
 app.get('/', (req, res) => {
 	res.sendFile('./public/index.html');
@@ -19,14 +24,26 @@ app.get(Api.Posts, (req, res) => {
 });
 
 app.post(Api.Login, (req, res) => {
-	// TODO move to business layer
-	console.log(req.params);
+	console.log(req.body);
 	
-	const data = {
-		success: true,
-		user: req.params.username,
-		token: 'asdfasdf',
+	// TODO move to business layer
+	let data = {
+		success: false,
+		reason: 'Invalid username or password',
+		user: req.body.username,
+		token: null,
 	};
+	
+	if (req.body.username === 'apa' && req.body.pw === 'asdf') {
+		data = {
+			success: true,
+			reason: '',
+			user: req.body.username,
+			token: 'asdfasdf',
+		};
+	}
+	
+	console.log(data);
 	res.json(data);
 });
 
