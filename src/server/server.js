@@ -7,10 +7,10 @@ const app 			= express();
 // const router 	= express.Router();
 const tempdata 		= require('./tempdata');
 const Api			= require('./common/api');
+/* const db			= */require('./data/connector');
 
 app.use(express.static(`${__dirname}/public`));
 app.use(bodyParser.json());
-
 
 app.get('/', (req, res) => {
 	res.sendFile('./public/index.html');
@@ -23,7 +23,7 @@ app.get(Api.Posts, (req, res) => {
 	res.json(data);
 });
 
-app.post(Api.Login, (req, res) => {
+app.post(Api.UsersLogin, (req, res) => {
 	console.log(req.body);
 	
 	// TODO move to business layer

@@ -18,10 +18,10 @@ const UserService = {
 		// 	}, 1000);
 		// });
 		
-		const p = fetch(Api.Login, {
+		const p = fetch(Api.UsersLogin, {
 			method: 'post',
 			headers: {
-				'Accept': 'application/json',
+				Accept: 'application/json',
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify({ username, pw }),
