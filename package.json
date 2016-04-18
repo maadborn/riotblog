@@ -5,7 +5,8 @@
   "main": "dist/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "./node_modules/.bin/eslint src/scripts/** src/scripts/tags/**"
+    "lint": "./node_modules/.bin/eslint src/scripts/** src/scripts/tags/**",
+    "repopulate-db": "mongo localhost/test db/repopulateDb.js"
   },
   "repository": {
     "type": "git",
@@ -18,6 +19,7 @@
   },
   "homepage": "https://github.com/maadborn/riotblog#readme",
   "dependencies": {
+    "bcrypt": "^0.8.5",
     "body-parser": "^1.15.0",
     "express": "^4.13.4",
     "moment": "^2.12.0",

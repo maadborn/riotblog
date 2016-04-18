@@ -1,8 +1,10 @@
 const mongoose = require('mongoose');
+const Config = require('../config');
 
-const User = require('./models/user');
+// Add all models
+require('./models');
 
-mongoose.connect('mongodb://localhost/test');
+mongoose.connect(Config.MongoConnectionString);
 
 const db = mongoose.connection;
 

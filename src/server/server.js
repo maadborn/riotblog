@@ -8,6 +8,7 @@ const app 			= express();
 const tempdata 		= require('./tempdata');
 const Api			= require('./common/api');
 /* const db			= */require('./data/connector');
+const userService	= require('./business/userservice');
 
 app.use(express.static(`${__dirname}/public`));
 app.use(bodyParser.json());
@@ -16,6 +17,7 @@ app.get('/', (req, res) => {
 	res.sendFile('./public/index.html');
 });
 
+// Get all posts
 app.get(Api.Posts, (req, res) => {
 	// Get data, sort data with newest post first
 	// TODO move to business layer
@@ -23,27 +25,15 @@ app.get(Api.Posts, (req, res) => {
 	res.json(data);
 });
 
+// Login user with the supplied username and password
 app.post(Api.UsersLogin, (req, res) => {
-	console.log(req.body);
-	
-	// TODO move to business layer
-	let data = {
-		success: false,
-		reason: 'Invalid username or password',
-		user: req.body.username,
-		token: null,
-	};
-	
-	if (req.body.username === 'apa' && req.body.pw === 'asdf') {
-		data = {
-			success: true,
-			reason: '',
-			user: req.body.username,
-			token: 'asdfasdf',
-		};
-	}
-	
-	console.log(data);
+	const data = userService.verifyUser(req.body.username, req.body.pw);
+	res.json(data);
+});
+
+// Create a new user
+app.post(Api.Users, (req, res) => {
+	const data = userService.createUser(req.body.username, req.body.pw);
 	res.json(data);
 });
 

@@ -10,7 +10,8 @@
     "rules": {
         "indent": [1, "tab"],
         "comma-dangle": [2, "only-multiline"],
-		"no-trailing-spaces": [2, { "skipBlankLines": true }]
+		"no-trailing-spaces": [2, { "skipBlankLines": true }],
+        "space-before-function-paren": ["error", "never"]
     },
     "env": {
         "es6": true
