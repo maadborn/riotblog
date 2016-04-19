@@ -20,7 +20,7 @@ roles.findOne({ name: 'author' }).then(function(doc) {
 	users.insertOne({
 		username: 'admin',
 		role: doc._id,
-		// HASH HERE!!!
+		hashedPassword: $2a$10$vyER2bLkplWe4CwTdvP0juh0Kv8zlxDy6UQCDpDUwYHur00uR0X.W //admin
 	});
 });
 */

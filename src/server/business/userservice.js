@@ -1,10 +1,9 @@
 'use strict';
 
-const User = require('../data/models/user');
-const bcrypt = require('bcrypt');
+const User 		= require('../data/models/user');
+const bcrypt 	= require('bcrypt');
 
 const UserService = {
-	
 	createUser(username, password) {
 		bcrypt.genSalt(10, (err, salt) => {
 			if (err) { console.error(err); }
