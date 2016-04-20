@@ -23,8 +23,13 @@ function router(app) {
 
 	// Create a new user
 	app.post(Api.Users, (req, res) => {
-		const data = userService.createUser(req.body.username, req.body.pw);
-		res.json(data);
+		userService.createCommenter(req.body.username, req.body.pw)
+			.then((userData) => {
+				res.json(userData);
+			})
+			.catch((err) => {
+				res.json({ err });
+			});
 	});
 }
 

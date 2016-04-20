@@ -1,4 +1,5 @@
-const mongoose = require('mongoose');
+const mongoose 	 = require('mongoose');
+mongoose.Promise = require('bluebird');
 
 const RoleSchema = mongoose.Schema({
 	name: String,
