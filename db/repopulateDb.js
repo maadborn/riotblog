@@ -1,31 +1,35 @@
 // Define collections
-var collections = ['Users', 'Roles'];
+//var collections = ['Users', 'Roles'];
 
 // Drop everything
-async.each(collections, function(collection, done) {
-	db.collection(collection).drop(done);
-});
+// async.each(collections, function(collection, done) {
+// 	db.collection(collection).drop(done);
+// });
+
+db.getCollectionNames()
+	.forEach(function(collectionName) {
+		db[collectionName].remove({});
+	});
 
 // Create roles
-var roles = db.collection('Roles');
-roles.insertMany({
-	name: 'commenter'
-}, {
-	name: 'author'
-});
+db.createCollection('roles');
+db.roles.insertMany(
+	[
+		{ name: 'commenter' }, 
+	 	{ name: 'author' }
+	]);
 
-/*
-var users = db.collection('Users');
-roles.findOne({ name: 'author' }).then(function(doc) {
-	users.insertOne({
-		username: 'admin',
-		role: doc._id,
-		hashedPassword: $2a$10$vyER2bLkplWe4CwTdvP0juh0Kv8zlxDy6UQCDpDUwYHur00uR0X.W //admin
-	});
-});
-*/
-
+// var users = db.collection('Users');
 // Create a default admin
+var authorRole = db.roles.findOne({ name: 'author' })
+if (authorRole) {
+	db.users.insertOne({
+		username: 'admin',
+		role: authorRole._id,
+		hashedPassword: '$2a$10$vyER2bLkplWe4CwTdvP0juh0Kv8zlxDy6UQCDpDUwYHur00uR0X.W' //admin
+	});
+}
+
 
 
 /*

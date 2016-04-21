@@ -4,7 +4,7 @@ const Role 		 = require('./role');
 
 const UserSchema = mongoose.Schema({
 	username: String,
-	role: { type: mongoose.Schema.Types.ObjectId, ref: 'Role' },
+	role: { type: mongoose.Schema.Types.ObjectId, ref: 'role' },
 	hashedPassword: String,
 });
 
@@ -26,7 +26,7 @@ UserSchema.methods.saveCommenter = (username, hash, cb) => {
 		.select('_id')
 		.exec()
 		.then((roleId) => {
-			const UserModel = this.model('User');
+			const UserModel = this.model('user');
 			const user = new UserModel({
 				username,
 				hashedPassword: hash,
@@ -40,6 +40,6 @@ UserSchema.methods.saveCommenter = (username, hash, cb) => {
 		});
 };
 
-const User = mongoose.model('User', UserSchema);
+const User = mongoose.model('user', UserSchema);
 
 module.exports = User;
