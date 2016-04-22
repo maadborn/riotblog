@@ -8,20 +8,7 @@ const UserSchema = mongoose.Schema({
 	hashedPassword: String,
 });
 
-UserSchema.methods.saveCommenter = (username, hash, cb) => {
-	// Role.findOne({ name: 'commenter' }, '_id', (err, role) => {
-	// 	const UserModel = this.model('User');
-	// 	const user = new UserModel({
-	// 		username,
-	// 		hashedPassword: hash,
-	// 		role: role._id,
-	// 	});
-		
-	// 	user.save(cb);
-	// });
-	
-	// Promisified version
-	
+UserSchema.methods.saveCommenter = function saveCommenter(username, hash, cb) {
 	return Role.findOne({ name: 'commenter' })
 		.select('_id')
 		.exec()

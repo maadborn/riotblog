@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "./node_modules/.bin/eslint src/scripts/** src/scripts/tags/**",
-    "repopulate-db": "mongo localhost/test db/repopulateDb.js"
+    "start-db": "mongod",
+    "repopulate-db": "mongo localhost/test db/repopulate.js"
   },
   "repository": {
     "type": "git",

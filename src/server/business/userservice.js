@@ -21,8 +21,8 @@ const UserService = {
 		// Async version
 		
 		return bcrypt.genSaltAsync(10)
-			.then((salt) => bcrypt.hashAsync(password, salt))
-			.then((hash) => User.saveCommenter(username, hash))
+			.then(salt => bcrypt.hashAsync(password, salt))
+			.then(hash => User.saveCommenter(username, hash))
 			// TODO .then remap to a user response object, don't send the complete object back
 			// add jwt token to object
 			.catch((err) => {
