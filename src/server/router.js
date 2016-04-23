@@ -1,6 +1,6 @@
-const tempdata 		= require('./tempdata');
 const Api			= require('./common/api');
 const userService	= require('./business/userservice');
+const postService	= require('./business/postservice');
 
 function router(app) {
 	app.get('/', (req, res) => {
@@ -9,10 +9,10 @@ function router(app) {
 
 	// Get all posts
 	app.get(Api.Posts, (req, res) => {
-		// Get data, sort data with newest post first
-		// TODO move to business layer
-		const data = tempdata.posts.sort((a, b) => b.time - a.time);
-		res.json(data);
+		postService.getPosts()
+			.then((posts) => {
+				res.json(posts);
+			});
 	});
 
 	// Login user with the supplied username and password
