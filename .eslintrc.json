@@ -7,8 +7,9 @@
     //     "react"
     // ],
     "rules": {
-        "indent": [1, "tab"],
+        "arrow-body-style": [0, "as-needed"],
         "comma-dangle": [2, "only-multiline"],
+        "indent": [1, "tab"],
 		"no-trailing-spaces": [2, { "skipBlankLines": true }],
         "space-before-function-paren": ["error", "never"]
     },

@@ -13,6 +13,7 @@ const PostService = {
 			.exec();
 	},
 	getPost(id) {
+		return id;
 	},
 };
 

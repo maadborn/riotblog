@@ -17,8 +17,13 @@ function router(app) {
 
 	// Login user with the supplied username and password
 	app.post(Api.UsersLogin, (req, res) => {
-		const data = userService.verifyUser(req.body.username, req.body.pw);
-		res.json(data);
+		userService.verifyUser(req.body.username, req.body.pw)
+			.then((userData) => {
+				res.json(userData);
+			})
+			.catch((err) => {
+				res.json({ err });
+			});
 	});
 
 	// Create a new user

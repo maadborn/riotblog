@@ -6,21 +6,7 @@ const bcrypt 	= Promise.promisifyAll(require('bcrypt'));
 
 const UserService = {
 	createCommenter(username, password) {
-		// bcrypt.genSalt(10, (err, salt) => {
-		// 	if (err) { console.error(err); }
-			
-		// 	bcrypt.hash(password, salt, (err2, hash) => {
-		// 		if (err2) { console.error(err2); }
-				
-		// 		User.saveCommenter(username, hash);
-		// 	});
-		// });
-		
-		// return;
-		
-		// Async version
-		
-		return bcrypt.genSaltAsync(10)
+		const promise = bcrypt.genSaltAsync(10)
 			.then(salt => bcrypt.hashAsync(password, salt))
 			.then(hash => User.saveCommenter(username, hash))
 			// TODO .then remap to a user response object, don't send the complete object back
@@ -28,26 +14,44 @@ const UserService = {
 			.catch((err) => {
 				console.error('Failed to create user:', err);
 			});
+			
+		return promise;
 	},
 	verifyUser(username, password) {
-		// TODO implement pw hashing and db saving
-		let data = {
-			success: false,
-			reason: 'Invalid username or password',
-			user: username,
-			token: null,
-		};
-		
-		if (username === 'apa' && password === 'asdf') {
-			data = {
-				success: true,
-				reason: '',
-				user: username,
-				token: 'asdfasdf',
-			};
-		}
-		
-		return data;
+		const promise = User.findOne({ username })
+			.exec()
+			.then((user) => {
+				return (user && user.hashedPassword)
+					? user.hashedPassword
+					: 'thisisnotavalidhash';
+			})
+			.then((hash) => bcrypt.compareAsync(password, hash))
+			.then((isVerified) => {
+				// TODO Add JWT token... -ization?
+				
+				let data = {
+					success: false,
+					reason: 'Invalid username or password',
+					user: username,
+					token: null,
+				};
+				
+				if (isVerified) {
+					data = {
+						success: isVerified,
+						reason: '',
+						user: username,
+						token: 'asdfasdf',
+					};
+				}
+				
+				return data;
+			})
+			.catch((err) => {
+				console.error('Failed to verify user:', err);
+			});
+			
+		return promise;
 	},
 };
 

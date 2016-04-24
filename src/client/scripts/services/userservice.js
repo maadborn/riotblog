@@ -6,17 +6,7 @@ const UserService = {
 	login(username, pw) {
 		eventBus.trigger(AppEvents.State.Loading);
 		
-		// TODO: implementation
 		console.log('logging in', username, pw);
-		// const p = new Promise((resolve /* , reject*/) => {
-		// 	setTimeout(() => {
-		// 		// reject('no no!');
-		// 		resolve({
-		// 			user: username,
-		// 			token: 'asdf'
-		// 		});
-		// 	}, 1000);
-		// });
 		
 		const p = fetch(Api.UsersLogin, {
 			method: 'post',
