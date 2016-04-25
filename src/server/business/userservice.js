@@ -27,8 +27,7 @@ const UserService = {
 			})
 			.then((hash) => bcrypt.compareAsync(password, hash))
 			.then((isVerified) => {
-				// TODO Add JWT token... -ization?
-				
+				// TODO Add a function object/constructor for creating these kinds object
 				let data = {
 					success: false,
 					reason: 'Invalid username or password',
@@ -41,7 +40,7 @@ const UserService = {
 						success: isVerified,
 						reason: '',
 						user: username,
-						token: 'asdfasdf',
+						token: 'asdfasdf',	// TODO Add JWT token... -ization?
 					};
 				}
 				

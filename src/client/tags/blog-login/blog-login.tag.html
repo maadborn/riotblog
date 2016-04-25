@@ -1,0 +1,22 @@
+<blog-login>
+	<form name="loginform" class="loginform" onsubmit="{ submitLogin }">
+		<input name="username" type="text" placeholder="Username" required></input>
+		<input name="password" type="password" placeholder="Password" required></input>
+		<button type="submit">Login</button>
+	</form>
+	
+	<!--separator-->
+	
+	<form name="signupform" class="signupform" onsubmit="{ submitSignup }">
+		<input name="username" type="text" placeholder="Username" required></input>
+		<input name="password" type="password" placeholder="Password" required></input>
+		<input name="passwordRepeat" type="password" placeholder="Repeat password" required></input>
+		<button type="submit">Signup</button>
+	</form>
+		
+	<script>
+		import tag from './blog-login';
+		Object.assign(this, tag);
+		this.init();
+	</script>
+</blog-login>
