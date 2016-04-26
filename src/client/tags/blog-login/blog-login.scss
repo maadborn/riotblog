@@ -1,3 +1,29 @@
 blog-login {
+	& {
+		// position: relative;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-around;
+	}
 	
+	.loginform,
+	.signupform {
+		display: flex;
+		flex-direction: column;
+		// justify-content: space-around;
+	}
+	
+	.separator {
+		// border-left: 1px solid lightgray;
+		background: lightgray;
+		width: 1px;
+		// height: 100%;
+		// min-height: 100%;
+		// position: relative;
+		// top: 0;
+	}
+	
+	input {
+		margin-bottom: 0.5em; 
+	}
 }

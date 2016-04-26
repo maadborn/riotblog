@@ -34,10 +34,15 @@ const UserService = {
 		
 		return p;
 	},
+	
 	logout() {
-		// TODO: implementation
+		// TODO: implementation: with JWT, delete the token locally
 		eventBus.trigger(AppEvents.State.Unauthenticated);
 		eventBus.trigger(AppEvents.Elements.Toast.Show, 'Logged out', 'success');
+	},
+	
+	signup(username, password, passwordRepeat) {
+		
 	}
 };
 

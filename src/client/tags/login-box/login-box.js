@@ -5,8 +5,8 @@ import userService from '../../scripts/services/userservice';
 const LoginBoxTag = {
 	init() {
 		eventBus.on(AppEvents.Elements.LoginBox.Toggle, this.toggle.bind(this));
-		eventBus.on(AppEvents.State.Authenticated, this.reactToAuthentication.bind(this));
-		eventBus.on(AppEvents.State.Unauthenticated, this.reactToUnauthentication.bind(this));
+		eventBus.on(AppEvents.State.Authenticated, this.onAuthentication.bind(this));
+		eventBus.on(AppEvents.State.Unauthenticated, this.onUnauthentication.bind(this));
 	},
 	
 	isOpen() {
@@ -38,13 +38,13 @@ const LoginBoxTag = {
 		userService.logout(/* this.username.value */);
 	},
 
-	reactToAuthentication() {
+	onAuthentication() {
 		this.isAuthenticated = true;
 		this.update();
 		this.close();
 	},
 
-	reactToUnauthentication() {
+	onUnauthentication() {
 		this.isAuthenticated = false;
 		this.update();
 		this.close();

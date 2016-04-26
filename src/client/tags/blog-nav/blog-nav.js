@@ -5,8 +5,8 @@ const BlogNavTag = {
 	init() {
 		this.logXText = 'Login';
 		
-		eventBus.on(AppEvents.State.Authenticated, this.reactToAuthentication.bind(this));
-		eventBus.on(AppEvents.State.Unauthenticated, this.reactToUnauthentication.bind(this));
+		eventBus.on(AppEvents.State.Authenticated, this.onAuthentication.bind(this));
+		eventBus.on(AppEvents.State.Unauthenticated, this.onUnauthentication.bind(this));
 	},
 	
 	toggleLoginBox(event) {
@@ -15,12 +15,12 @@ const BlogNavTag = {
 		return false;
 	},
 
-	reactToAuthentication() {
+	onAuthentication() {
 		this.logXText = 'Logout';
 		this.update();
 	},
 
-	reactToUnauthentication() {
+	onUnauthentication() {
 		this.logXText = 'Login';
 		this.update();
 	},

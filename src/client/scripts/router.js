@@ -28,6 +28,10 @@ const Router = {
 		riot.route('/test', () => {
 			this.setMainContentTo('blog-test');
 		});
+		
+		riot.route('/login', () => {
+			this.setMainContentTo('blog-login');
+		});
 
 		riot.route.start(true);
 	},

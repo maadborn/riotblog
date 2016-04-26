@@ -9,6 +9,7 @@ import '../tags/blog-app/blog-app.tag.html';
 import '../tags/blog-about/blog-about.tag.html';
 import '../tags/blog-edit/blog-edit.tag.html';
 import '../tags/blog-editor/blog-editor.tag.html';
+import '../tags/blog-login/blog-login.tag.html';
 import '../tags/blog-nav/blog-nav.tag.html';
 import '../tags/blog-post/blog-post.tag.html';
 import '../tags/blog-posts/blog-posts.tag.html';

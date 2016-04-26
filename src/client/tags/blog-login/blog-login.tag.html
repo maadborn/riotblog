@@ -1,13 +1,15 @@
 <blog-login>
 	<form name="loginform" class="loginform" onsubmit="{ submitLogin }">
+		<h2>Login</h2>
 		<input name="username" type="text" placeholder="Username" required></input>
 		<input name="password" type="password" placeholder="Password" required></input>
 		<button type="submit">Login</button>
 	</form>
 	
-	<!--separator-->
+	<div class="separator"></div>
 	
 	<form name="signupform" class="signupform" onsubmit="{ submitSignup }">
+		<h2>Sign up</h2>
 		<input name="username" type="text" placeholder="Username" required></input>
 		<input name="password" type="password" placeholder="Password" required></input>
 		<input name="passwordRepeat" type="password" placeholder="Repeat password" required></input>
