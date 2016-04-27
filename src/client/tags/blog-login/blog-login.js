@@ -12,10 +12,6 @@ const BlogLoginTag = {
 		const password = this.loginform.elements.password.value;
 		
 		if (!this.validateLogin(username, password)) {
-			eventBus.trigger(
-				AppEvents.Elements.Toast.Show,
-				'Username or password missing',
-				'warning');
 			return;
 		}
 		
@@ -27,10 +23,6 @@ const BlogLoginTag = {
 		const passwordRepeat = this.loginform.elements.passwordRepeat.value;
 		
 		if (!this.validateSignup(username, password)) {
-			eventBus.trigger(
-				AppEvents.Elements.Toast.Show,
-				'Signup form is not filled out correctly',
-				'warning');
 			return;
 		}
 		
@@ -39,15 +31,27 @@ const BlogLoginTag = {
 	
 	validateLogin(username, password) {
 		if (username && password) {
+			eventBus.trigger(
+				AppEvents.Elements.Toast.Show,
+				'The login form is not filled out correctly',
+				'warning');
 			return true;
 		}
 		return false;
 	},
 	validateSignup(username, password, passwordRepeat) {
 		if (username && password && passwordRepeat) {
+			eventBus.trigger(
+				AppEvents.Elements.Toast.Show,
+				'The signup form is not filled out correctly',
+				'warning');
 			return true;
 		}
 		if (password !== passwordRepeat) {
+			eventBus.trigger(
+				AppEvents.Elements.Toast.Show,
+				'The passwords does not match',
+				'warning');
 			return true;
 		}
 		return false;
