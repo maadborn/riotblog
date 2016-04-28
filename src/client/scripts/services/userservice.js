@@ -8,7 +8,7 @@ const UserService = {
 		
 		console.log('logging in', username, pw);
 		
-		const p = fetch(Api.UsersLogin, {
+		const promise = fetch(Api.UsersLogin, {
 			method: 'post',
 			headers: {
 				Accept: 'application/json',
@@ -32,7 +32,7 @@ const UserService = {
 			eventBus.trigger(AppEvents.State.Loaded);
 		});
 		
-		return p;
+		return promise;
 	},
 	
 	logout() {
@@ -41,8 +41,34 @@ const UserService = {
 		eventBus.trigger(AppEvents.Elements.Toast.Show, 'Logged out', 'success');
 	},
 	
-	signup(username, password, passwordRepeat) {
+	signup(username, password /* , passwordRepeat*/) {
+		eventBus.trigger(AppEvents.State.Loading);
+
+		const promise = fetch(Api.Users, {
+			method: 'post',
+			headers: {
+				Accept: 'application/json',
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({ username, password })
+		})
+		.then((res) => res.json())
+		.then((json) => {
+			if (json.success) {
+				eventBus.trigger(AppEvents.Elements.Toast.Show, `Logged in as ${json.user}`, 'success');
+				eventBus.trigger(AppEvents.State.Authenticated, json.user);
+			} else {
+				eventBus.trigger(AppEvents.Elements.Toast.Show, `Signup failed: ${json.reason}`, 'error');
+			}
+		})
+		.catch((reason) => {
+			eventBus.trigger(AppEvents.Elements.Toast.Show, `Signup failed: ${reason}`, 'error');
+		})
+		.then(() => {
+			eventBus.trigger(AppEvents.State.Loaded);
+		});
 		
+		return promise;
 	}
 };
 
