@@ -6,10 +6,31 @@ const bcrypt 	= Promise.promisifyAll(require('bcrypt'));
 
 const UserService = {
 	createCommenter(username, password) {
+		// TODO: check if username exists, if yes, then return
+		
 		const promise = bcrypt.genSaltAsync(10)
-			.then(salt => bcrypt.hashAsync(password, salt))
-			.then(hash => User.saveCommenter(username, hash))
-			// TODO .then remap to a user response object, don't send the complete object back
+			.then((salt) => bcrypt.hashAsync(password, salt))
+			.then((hash) => User.saveCommenter(username, hash))
+			.then((user) => {
+				// TODO Add a function object/constructor for creating these kinds object
+				let data = {
+					success: false,
+					reason: 'Failed to return user object',
+					user: username,
+					token: null,
+				};
+				
+				if (user) {
+					data = {
+						success: true,
+						reason: '',
+						user: username,
+						token: 'asdfasdf',	// TODO Add JWT token... -ization?
+					};
+				}
+				
+				return data;
+			})
 			// add jwt token to object
 			.catch((err) => {
 				console.error('Failed to create user:', err);

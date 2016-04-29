@@ -51,7 +51,7 @@ const BlogLoginTag = {
 		if (password !== passwordRepeat) {
 			eventBus.trigger(
 				AppEvents.Elements.Toast.Show,
-				'The passwords does not match',
+				'The passwords do not match',
 				'warning');
 			return false;
 		}

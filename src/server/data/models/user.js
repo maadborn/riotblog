@@ -8,7 +8,9 @@ const UserSchema = mongoose.Schema({
 	hashedPassword: String,
 });
 
-UserSchema.methods.saveCommenter = function saveCommenter(username, hash, cb) {
+UserSchema.statics.saveCommenter = function saveCommenter(username, hash, cb) {
+	// TODO: upsert instead of create new?
+	
 	return Role.findOne({ name: 'commenter' })
 		.select('_id')
 		.exec()

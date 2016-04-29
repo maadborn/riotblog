@@ -3,10 +3,10 @@ import AppEvents from '../appevents';
 import Api from '../../../common/api';
 
 const UserService = {
-	login(username, pw) {
+	login(username, password) {
 		eventBus.trigger(AppEvents.State.Loading);
 		
-		console.log('logging in', username, pw);
+		console.log('logging in', username, password);
 		
 		const promise = fetch(Api.UsersLogin, {
 			method: 'post',
@@ -14,13 +14,15 @@ const UserService = {
 				Accept: 'application/json',
 				'Content-Type': 'application/json',
 			},
-			body: JSON.stringify({ username, pw }),
+			body: JSON.stringify({ username, password }),
 		})
 		.then((res) => res.json())
 		.then((json) => {
 			if (json.success) {
 				eventBus.trigger(AppEvents.Elements.Toast.Show, `Logged in as ${json.user}`, 'success');
 				eventBus.trigger(AppEvents.State.Authenticated, json.user);
+				// TODO Redirect
+				// TODO Save token
 			} else {
 				eventBus.trigger(AppEvents.Elements.Toast.Show, `Login failed: ${json.reason}`, 'error');
 			}
@@ -55,8 +57,13 @@ const UserService = {
 		.then((res) => res.json())
 		.then((json) => {
 			if (json.success) {
-				eventBus.trigger(AppEvents.Elements.Toast.Show, `Logged in as ${json.user}`, 'success');
+				eventBus.trigger(
+					AppEvents.Elements.Toast.Show,
+					`User ${json.user} created and logged in`,
+					'success');
 				eventBus.trigger(AppEvents.State.Authenticated, json.user);
+				// TODO Redirect
+				// TODO Save token
 			} else {
 				eventBus.trigger(AppEvents.Elements.Toast.Show, `Signup failed: ${json.reason}`, 'error');
 			}
