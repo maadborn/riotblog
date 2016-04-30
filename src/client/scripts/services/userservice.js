@@ -1,6 +1,7 @@
-import eventBus from '../eventbus';
-import AppEvents from '../appevents';
-import Api from '../../../common/api';
+import eventBus 	from '../eventbus';
+import AppEvents 	from '../appevents';
+import Api 			from '../../../common/api';
+import riot			from 'riot';
 
 const UserService = {
 	login(username, password) {
@@ -21,7 +22,7 @@ const UserService = {
 			if (json.success) {
 				eventBus.trigger(AppEvents.Elements.Toast.Show, `Logged in as ${json.user}`, 'success');
 				eventBus.trigger(AppEvents.State.Authenticated, json.user);
-				// TODO Redirect
+				riot.route('home');
 				// TODO Save token
 			} else {
 				eventBus.trigger(AppEvents.Elements.Toast.Show, `Login failed: ${json.reason}`, 'error');
@@ -62,7 +63,7 @@ const UserService = {
 					`User ${json.user} created and logged in`,
 					'success');
 				eventBus.trigger(AppEvents.State.Authenticated, json.user);
-				// TODO Redirect
+				riot.route('home');
 				// TODO Save token
 			} else {
 				eventBus.trigger(AppEvents.Elements.Toast.Show, `Signup failed: ${json.reason}`, 'error');
