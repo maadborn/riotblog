@@ -3,11 +3,13 @@ import riot			from 'riot';
 import eventBus 	from '../eventbus';
 import AppEvents 	from '../appevents';
 import Api 			from '../../../common/api';
+import stateMgr		from '../statemanager';
 
 const DataServiceValidator = {
-	validatePost(post) {
+	validatePost(post, username) {
 		return post.title
-			&& post.body;
+			&& post.body
+			&& username;
 	}
 };
 
@@ -27,20 +29,31 @@ const DataService = {
 	},
 	
 	submitPost(post) {
-		const prom = new Promise((resolve, reject) => {
-			eventBus.trigger(AppEvents.State.Loading);
-			
-			if (!DataServiceValidator.validatePost(post)) {
-				reject('The post is missing required parts');
-			}
-			
-			setTimeout(() => {
-				const p2 = Object.assign(post, { time: Date.now() });
-				resolve(p2);
-			}, 300);
-		});
+		eventBus.trigger(AppEvents.State.Loading);
 		
-		prom.then((responsePost) => {
+		const username = stateMgr.getStateData('user');
+		
+		if (!DataServiceValidator.validatePost(post, username)) {
+			eventBus.trigger(
+				AppEvents.Elements.Toast.Show,
+				'The post is missing required parts',
+				'warning');
+			return;
+		}
+		
+		const prom = fetch(Api.Posts, {
+			method: 'post',
+			headers: {
+				Accept: 'application/json',
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				title: post.title,
+				body: post.body,
+				username
+			})
+		})
+		.then((responsePost) => {
 			this.posts.unshift(responsePost);
 			eventBus.trigger(AppEvents.Data.Posts.Updated);
 			return true;

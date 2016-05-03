@@ -59,6 +59,7 @@ const StateManager = {
 		// Then XOR the masked state with the stored state to only try to remove that state.
 		this.state = (this.state & state) ^ this.state;
 	},
+	
 	addStateData(key, data) {
 		if (this.stateData[key] === undefined) {
 			throw new Error(
@@ -70,7 +71,13 @@ const StateManager = {
 				Might or might not be a good idea to disallow..`);
 		}
 		this.stateData[key] = data;
-		return;
+	},
+	getStateData(key) {
+		if (this.stateData[key] === undefined) {
+			throw new Error(
+				`StateManager.addState: key ${key} does not exist. Define it in StateDataContainer first`);
+		}
+		return this.stateData[key];
 	},
 	
 	init() {

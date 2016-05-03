@@ -12,12 +12,26 @@ function router(app) {
 		postService.getPosts()
 			.then((posts) => {
 				res.json(posts);
+			})
+			.catch((err) => {
+				res.json({ err });
+			});
+	});
+	
+	// Create post
+	app.post(Api.Posts, (req, res) => {
+		postService.savePost(req.body.title, req.body.body, req.body.username)
+			.then((post) => {
+				res.json(post);
+			})
+			.catch((err) => {
+				res.json({ err });
 			});
 	});
 
 	// Login user with the supplied username and password
 	app.post(Api.UsersLogin, (req, res) => {
-		userService.verifyUser(req.body.username, req.body.password)
+		userService.verifyUser(req.body.username, req.body.password, req.body.username)
 			.then((userData) => {
 				res.json(userData);
 			})

@@ -3,7 +3,8 @@
 const Post = require('../data/models/post');
 
 const PostService = {
-	savePost() {
+	savePost(title, body, username) {
+		return Post.savePost(title, body, username);
 	},
 	// Get data, sort data with newest post first
 	getPosts() {
