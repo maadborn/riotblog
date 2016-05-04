@@ -1,33 +1,15 @@
 const Api			= require('./common/api');
 const userService	= require('./business/userservice');
-const postService	= require('./business/postservice');
+const PostsRoutesFactory = require('./routes/postsroutesfactory');
 
 function router(app) {
 	app.get('/', (req, res) => {
 		res.sendFile('./public/index.html');
 	});
-
-	// Get all posts
-	app.get(Api.Posts, (req, res) => {
-		postService.getPosts()
-			.then((posts) => {
-				res.json(posts);
-			})
-			.catch((err) => {
-				res.json({ err });
-			});
-	});
 	
-	// Create post
-	app.post(Api.Posts, (req, res) => {
-		postService.savePost(req.body.title, req.body.body, req.body.username)
-			.then((post) => {
-				res.json(post);
-			})
-			.catch((err) => {
-				res.json({ err });
-			});
-	});
+	PostsRoutesFactory.addRoutes(app);
+
+	// TODO create a usersroutesfactory
 
 	// Login user with the supplied username and password
 	app.post(Api.UsersLogin, (req, res) => {
