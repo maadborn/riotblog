@@ -4,12 +4,12 @@
 const express 		= require('express');
 const bodyParser 	= require('body-parser');
 /* const db			= */require('./data/connector');
-const router		= require('./router');
+const RoutesFactory		= require('./routesfactory');
 const app 			= express();
 
 app.use(express.static(`${__dirname}/public`));
 app.use(bodyParser.json());
 
-router(app);
+RoutesFactory.createRoutes(app);
 
 app.listen(5000);
