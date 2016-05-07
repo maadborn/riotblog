@@ -22,7 +22,7 @@ const StateDataContainer = {
 	// add more, e.g. jwt token, post text from unfinished edit, etc.
 };
 
-const StateManager = {
+const _StateManager = {
 	_eventBus: eventBus,
 	stateData: StateDataContainer,
 	
@@ -75,7 +75,8 @@ const StateManager = {
 	getStateData(key) {
 		if (this.stateData[key] === undefined) {
 			throw new Error(
-				`StateManager.addState: key ${key} does not exist. Define it in StateDataContainer first`);
+				`StateManager.getStateData: key ${key} does not exist.
+				 Define it in StateDataContainer first`);
 		}
 		return this.stateData[key];
 	},
@@ -97,5 +98,6 @@ const StateManager = {
 };
 
 // const StateManager = Object.create(Object.assign({}, StateContainer.init()));
+export const StateManager = _StateManager.init();
 
-export default StateManager.init();
+export default StateManager;
