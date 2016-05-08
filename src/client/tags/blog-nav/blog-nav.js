@@ -1,6 +1,7 @@
 import AppEvents from '../../scripts/appevents';
 import eventBus from '../../scripts/eventbus';
 import { State, StateManager } from '../../scripts/statemanager';
+import userService from '../../scripts/services/userservice';
 
 const BlogNavTag = {
 	init() {
@@ -11,10 +12,11 @@ const BlogNavTag = {
 		eventBus.on(AppEvents.State.Unauthenticated, this.onUnauthentication.bind(this));
 	},
 	
-	onLogXButtonClick(/*event*/) {
-		// debugger;
+	onLogXButtonClick() {
 		if (StateManager.hasState(State.Authenticated)) {
-			eventBus.trigger(AppEvents.State.Unauthenticated);
+			// eventBus.trigger(AppEvents.State.Unauthenticated);
+			userService.logout();
+			return false;
 		}
 		return true;
 	},
