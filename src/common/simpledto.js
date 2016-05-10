@@ -1,6 +1,11 @@
 'use strict';
 
 function SimpleDTO(data = {}, success = true, message = null) {
+	if (message) {
+		// Strip message of the Error's prepended "Error: "
+		message = message.replace(/Error: /g, '');
+	}
+	
 	return {
 		data,
 		success,
