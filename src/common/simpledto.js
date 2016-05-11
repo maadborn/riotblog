@@ -13,7 +13,14 @@ function SimpleDTO(data = {}, success = true, message = null) {
 	};
 }
 
-// TODO add methods like success, failure
+SimpleDTO.success = function success(data) {
+	return new SimpleDTO(data, true, null);
+};
+
+SimpleDTO.failure = function failure(message) {
+	return new SimpleDTO(null, false, message);
+};
+
 // TODO add another property that can handle different kinds of failures, like error, validation
 
 module.exports = SimpleDTO;
