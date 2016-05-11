@@ -7,9 +7,7 @@ const UserService = {
 	login(username, password) {
 		eventBus.trigger(AppEvents.State.Loading);
 		
-		console.log('logging in', username, password);
-		
-		const promise = fetch(Api.UsersLogin, {
+		return fetch(Api.UsersLogin, {
 			method: 'post',
 			headers: {
 				Accept: 'application/json',
@@ -20,22 +18,21 @@ const UserService = {
 		.then((res) => res.json())
 		.then((json) => {
 			if (json.success) {
-				eventBus.trigger(AppEvents.Elements.Toast.Show, `Logged in as ${json.user}`, 'success');
-				eventBus.trigger(AppEvents.State.Authenticated, json.user);
+				const data = json.data;
+				eventBus.trigger(AppEvents.Elements.Toast.Show, `Logged in as ${data.username}`, 'success');
+				eventBus.trigger(AppEvents.State.Authenticated, data.username);
 				riot.route('home');
 				// TODO Save token
 			} else {
-				eventBus.trigger(AppEvents.Elements.Toast.Show, `Login failed: ${json.reason}`, 'error');
+				throw new Error(`${json.message}`);
 			}
 		})
-		.catch((reason) => {
-			eventBus.trigger(AppEvents.Elements.Toast.Show, `Login failed: ${reason}`, 'error');
+		.catch((err) => {
+			eventBus.trigger(AppEvents.Elements.Toast.Show, err.message, 'error');
 		})
 		.then(() => {
 			eventBus.trigger(AppEvents.State.Loaded);
 		});
-		
-		return promise;
 	},
 	
 	logout() {
@@ -44,40 +41,39 @@ const UserService = {
 		eventBus.trigger(AppEvents.Elements.Toast.Show, 'Logged out', 'success');
 	},
 	
-	signup(username, password /* , passwordRepeat*/) {
+	signup(username, password) {
 		eventBus.trigger(AppEvents.State.Loading);
 
-		const promise = fetch(Api.Users, {
+		return fetch(Api.Users, {
 			method: 'post',
 			headers: {
 				Accept: 'application/json',
 				'Content-Type': 'application/json',
 			},
-			body: JSON.stringify({ username, password })
+			body: JSON.stringify({ username, password }),
 		})
 		.then((res) => res.json())
 		.then((json) => {
 			if (json.success) {
+				const data = json.data;
 				eventBus.trigger(
 					AppEvents.Elements.Toast.Show,
-					`User ${json.user} created and logged in`,
+					`User ${data.username} created and logged in`,
 					'success');
-				eventBus.trigger(AppEvents.State.Authenticated, json.user);
+				eventBus.trigger(AppEvents.State.Authenticated, data.username);
 				riot.route('home');
 				// TODO Save token
 			} else {
-				eventBus.trigger(AppEvents.Elements.Toast.Show, `Signup failed: ${json.reason}`, 'error');
+				throw new Error(`${json.message}`);
 			}
 		})
-		.catch((reason) => {
-			eventBus.trigger(AppEvents.Elements.Toast.Show, `Signup failed: ${reason}`, 'error');
+		.catch((err) => {
+			eventBus.trigger(AppEvents.Elements.Toast.Show, err.message, 'error');
 		})
 		.then(() => {
 			eventBus.trigger(AppEvents.State.Loaded);
 		});
-		
-		return promise;
-	}
+	},
 };
 
 export default UserService;

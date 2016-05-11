@@ -8,15 +8,21 @@ const UserSchema = mongoose.Schema({
 	hashedPassword: String,
 });
 
-UserSchema.statics.saveCommenter = function saveCommenter(username, hash, cb) {
-	// TODO: upsert instead of create new?
-	
-	return Role.findOne({ name: 'commenter' })
-		.select('_id')
+UserSchema.statics.createCommenter = function createCommenter(username, hash, cb) {
+	return this.findOne({ username })
 		.exec()
+		.then((user) => {
+			if (user) {
+				throw new Error('Username already in use');
+			}
+			
+			return Role.findOne({ name: 'commenter' })
+				.select('_id')
+				.exec();
+		})
 		.then((roleId) => {
-			const UserModel = this.model('user');
-			const user = new UserModel({
+			// "new this" isn't the most readable form :/
+			const user = new this({
 				username,
 				hashedPassword: hash,
 				role: roleId,
@@ -25,7 +31,7 @@ UserSchema.statics.saveCommenter = function saveCommenter(username, hash, cb) {
 			return user.save(cb);
 		})
 		.catch((err) => {
-			console.error('Failed in query to create commenter:', err);
+			throw err;
 		});
 };
 

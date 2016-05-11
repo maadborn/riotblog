@@ -1,5 +1,6 @@
 const Api			= require('../common/api');
 const userService	= require('../business/userservice');
+const SimpleDTO		= require('../common/simpledto');
 
 const UsersRoutesFactory = {
 	addRoutes(app) {
@@ -7,10 +8,10 @@ const UsersRoutesFactory = {
 		app.post(Api.UsersLogin, (req, res) => {
 			userService.verifyUser(req.body.username, req.body.password, req.body.username)
 				.then((userData) => {
-					res.json(userData);
+					res.json(SimpleDTO.success(userData));
 				})
 				.catch((err) => {
-					res.json({ err });
+					res.json(SimpleDTO.failure(err.message));
 				});
 		});
 
@@ -18,10 +19,10 @@ const UsersRoutesFactory = {
 		app.post(Api.Users, (req, res) => {
 			userService.createCommenter(req.body.username, req.body.password)
 				.then((userData) => {
-					res.json(userData);
+					res.json(SimpleDTO.success(userData));
 				})
 				.catch((err) => {
-					res.json({ err });
+					res.json(SimpleDTO.failure(err.message));
 				});
 		});
 	},

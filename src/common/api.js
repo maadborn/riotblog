@@ -1,3 +1,5 @@
+'use strict';
+
 const apiHelpers = require('./apihelpers');
 
 const api = {
