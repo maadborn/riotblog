@@ -9,14 +9,14 @@ $font-color: transparentize($font-color-base, 0.2);
 
 $hx-color: #B15050; //#9B7272; //#058;
 
-$button-color: #D4CDC4;
+$button-color: $font-color-base;
 $button-color-hover: lighten($font-color, 30%);
 $button-bgcolor: #6D4C4C; //#17B;
 $button-bgcolor-hover: lighten($button-bgcolor, 15%); //#9B7171; //#17B;
 
 $input-bgcolor: #D4CDC4;
 
-$link-color: $font-color;
+$link-color: $font-color-base;
 $link-color-hover: lighten($font-color, 30%);
 $link-bgcolor: #444;
 $link-bgcolor-hover: lighten($link-bgcolor, 15%); //#555;
