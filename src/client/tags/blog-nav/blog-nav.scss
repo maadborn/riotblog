@@ -1,3 +1,5 @@
+@import '../../styles/variables';
+
 blog-nav {
 	nav {
 		position: relative;
@@ -9,23 +11,31 @@ blog-nav {
 		padding: 0;
 		display: block;
 		position: relative;
-		background-color: #28c;
+		background-color: $nav-bgcolor; //#28c;
+		box-shadow: 0 0 20px 3px #202020;
+		
+		@media (min-width: $large-breakpoint*1.02) {
+			& {
+				width: 101%;
+				left: -0.5%;
+			}
+		}
 	}
-
+	
 	li {
 		display: inline-block;
 	}
 
 	a {
 		padding: 15px;
-		color: white;
+		color: $font-color;
 		display: inline-block;
-		background-color: #28c;
+		background-color: $nav-bgcolor; //#28c;
 	}
 
 	a:hover,
 	.active {
 		color: white;
-		background-color: #17b;
+		background-color: $nav-bgcolor-hover;
 	}
 }

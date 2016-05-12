@@ -1,22 +1,15 @@
-/* Variables */
-
-$hx-color: #058;
-
-$button-color: #eee;
-$button-bgcolor: #17B;
-
-$bgcolor-transition: background-color ease-in 0.1s;
+@import 'variables';
 
 /* Styles */
 
 html {
-	background-color: #e0e0e0;
+	background-color: $html-bgcolor;
 	font-family: Arial, Helvetica, sans-serif;
-	color: #222;
+	color: $font-color;
 	font-size: 16px;
 }
 
-@media (min-width: 700px) {
+@media (min-width: $large-breakpoint) {
 	html { 
 		font-size: 15px;
 	}
@@ -37,13 +30,15 @@ h6 {
 }
 
 a {
-	color: #222;
+	color: $link-color;
+	background-color: $link-bgcolor; //#AFDAFD;
 	text-decoration: none;
-	background-color: #AFDAFD;
 	padding: 2px;
+		transition: $allcolors-transition;
 	
 	&:hover {
-		background-color: #7FC9FF;
+		color: $link-color-hover;
+		background-color: $link-bgcolor-hover; //#7FC9FF;
 	}
 }
 
@@ -54,11 +49,11 @@ button {
 	padding: 0.4rem;
 	font-size: 0.9em;
 	margin-bottom: 0.5rem;
-	transition: $bgcolor-transition;
+	cursor: pointer;
+		transition: $allcolors-transition;
 
 	&:hover {
-		background-color: #0E679E;
-		transition: $bgcolor-transition;
+		background-color: $button-bgcolor-hover;
 	}
 }
 
@@ -67,6 +62,7 @@ textarea {
 	padding: 0.2rem;
 	font-size: 0.9rem;
     border: 1px solid #ccc;
+	background-color: $input-bgcolor;
 }
 
 .right {

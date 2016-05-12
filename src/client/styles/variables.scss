@@ -1,0 +1,30 @@
+/* Variables */
+
+$large-breakpoint: 700px;
+
+$font-color-base: white;
+
+$html-bgcolor: #1F2C3E; // #e0e0e0;
+$font-color: transparentize($font-color-base, 0.5);
+
+$hx-color: #A55252; //#9B7272; //#058;
+
+$button-color: #eee;
+$button-bgcolor: #6D4C4C; //#17B;
+$button-bgcolor-hover: #9B7171; //#17B;
+
+$input-bgcolor: #EBDECF;
+
+$link-bgcolor: #444;
+$link-bgcolor-hover: #555;
+$link-color: $font-color;
+$link-color-hover: opacify($font-color, 0.4);
+
+$main-bgcolor: #202020;
+
+$nav-bgcolor: #333F4F;
+$nav-bgcolor-hover: #687486;
+
+$all-transition: all ease-in 0.1s;
+$allcolors-transition: color ease-in 0.1s, background-color ease-in 0.1s;
+$bgcolor-transition: background-color ease-in 0.1s;
