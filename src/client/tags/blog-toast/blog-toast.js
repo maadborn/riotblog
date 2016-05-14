@@ -14,6 +14,19 @@ const ToastType = {
 	}
 };
 
+const ToastIcon = {
+	Success: '✓',
+	Warning: '!',
+	Error: '⚠',
+	Info: 'i',
+	
+	hasKey(key) {
+		return Object.keys(this)
+			.map((keyName) => keyName.toLowerCase())
+			.some((item) => item === key);
+	}
+};
+
 const BlogToastTag = {
 	init() {
 		// Default values
@@ -26,14 +39,16 @@ const BlogToastTag = {
 		// Properties
 		this.message = this.defaultMessage;
 		this.type = this.defaultType;
+		this.icon = '✓';
 		this.timeoutToken = null;
 
-		eventBus.on(AppEvents.Elements.Toast.Show, this.reactToShowToast.bind(this));
+		eventBus.on(AppEvents.Elements.Toast.Show, this.onShowToast.bind(this));
 	},
 	
-	reactToShowToast(message, type) {
+	onShowToast(message, type) {
 		this.message = this.truncate(message || this.defaultMessage);
 		this.type = this.parseType(type);
+		this.icon = this.parseIcon(type);
 		
 		this.update();
 		
@@ -79,6 +94,15 @@ const BlogToastTag = {
 			return ToastType.Info;
 		}
 		return type;
+	},
+	
+	parseIcon(type) {
+		if (!ToastIcon.hasKey(type)) {
+			console.warn('blog-toast: type not valid', type);
+			return ToastIcon.Info;
+		}
+		console.log('asdf');
+		return ToastIcon[type];
 	},
 
 	getTimeout(text) {

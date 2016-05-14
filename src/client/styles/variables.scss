@@ -1,32 +1,48 @@
-/* Variables */
+/**
+ * Variables for the web app styling 
+ */
 
+
+/***************** Basic *****************/
+
+/*** Master variables ***/
 $large-breakpoint: 700px;
+$font-color-base: #D4CDC4;
 
-$font-color-base: #D4CDC4; //white;
-
-$html-bgcolor: #1F2C3E; // #e0e0e0;
+$html-bgcolor: #1F2C3E;
 $font-color: transparentize($font-color-base, 0.2);
 
-$hx-color: #B15050; //#9B7272; //#058;
+/*** Headings ***/
+$hx-color: #B15050;
 
+/*** Button ***/
 $button-color: $font-color-base;
 $button-color-hover: lighten($font-color, 30%);
-$button-bgcolor: #4F2A2A; //#17B;
-$button-bgcolor-hover: lighten($button-bgcolor, 15%); //#9B7171; //#17B;
+$button-bgcolor: #4F2A2A;
+$button-bgcolor-hover: lighten($button-bgcolor, 15%);
 
-$input-bgcolor: #C4B29D; //#D4CDC4;
+/*** Input ***/
+$input-bgcolor: #C4B29D;
 
+/*** Links (anchors) ***/
 $link-color: $font-color-base;
 $link-color-hover: lighten($font-color, 30%);
 $link-bgcolor: #444;
-$link-bgcolor-hover: lighten($link-bgcolor, 15%); //#555;
+$link-bgcolor-hover: lighten($link-bgcolor, 15%);
 
-$main-bgcolor: #202020;
-
-$nav-bgcolor: #333F4F;
-$nav-bgcolor-hover: #687486;
-
+/*** Transition ***/
 $-transition-type: ease-in 0.1s;
 $all-transition: all $-transition-type;
-$allcolors-transition: color $-transition-type, background-color $-transition-type;
+$allcolors-transition: color $-transition-type, 
+					   background-color $-transition-type;
 $bgcolor-transition: background-color $-transition-type;
+
+
+/***************** Tags *****************/
+
+/*** Main content ***/
+$main-bgcolor: #202020;
+
+/*** Navigation bar ***/
+$nav-bgcolor: #333F4F;
+$nav-bgcolor-hover: #687486;
