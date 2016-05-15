@@ -1,37 +1,46 @@
 import AppEvents from '../../scripts/appevents';
 import eventBus from '../../scripts/eventbus';
 
-const ToastType = {
+const KeyMethods = {
+	hasKey(key) {
+		return Object.keys(this)
+			.map((keyName) => keyName.toLowerCase())
+			.some((item) => item === key);
+	},
+	hasCaselessKey(testKey) {
+		return Object.keys(this)
+			.some((key) => key.toLowerCase() === testKey.toLowerCase());
+	},
+	getCaselessValueFromKey(key) {
+		if (!key) { return null; }
+		const capitalCasedKey = key[0].toUpperCase() + key.substring(1);
+		return this[capitalCasedKey];
+	},
+};
+
+const _ToastType = {
 	Success: 'success',
 	Warning: 'warning',
 	Error: 'error',
 	Info: 'info',
-	
-	hasKey(key) {
-		return Object.keys(this)
-			.map((keyName) => keyName.toLowerCase())
-			.some((item) => item === key);
-	}
 };
 
-const ToastIcon = {
+const _ToastIcon = {
 	Success: '✓',
 	Warning: '!',
 	Error: '⚠',
 	Info: 'i',
-	
-	hasKey(key) {
-		return Object.keys(this)
-			.map((keyName) => keyName.toLowerCase())
-			.some((item) => item === key);
-	}
 };
+
+const ToastType = Object.assign({}, _ToastType, KeyMethods);
+const ToastIcon = Object.assign({}, _ToastIcon, KeyMethods);
 
 const BlogToastTag = {
 	init() {
 		// Default values
 		this.defaultMessage = '[No message]';
 		this.defaultType = ToastType.Info;
+		this.defaultIconType = ToastIcon.Info;
 		this.defaultTimeout = 8000;
 		this.defaultMaxLength = 200;
 		this.maxWords = 25;
@@ -48,7 +57,10 @@ const BlogToastTag = {
 	onShowToast(message, type) {
 		this.message = this.truncate(message || this.defaultMessage);
 		this.type = this.parseType(type);
-		this.icon = this.parseIcon(type);
+		this.icon = this.parseIconType(type);
+		
+		this.root.className = '';
+		this.root.classList.add(type);
 		
 		this.update();
 		
@@ -96,13 +108,12 @@ const BlogToastTag = {
 		return type;
 	},
 	
-	parseIcon(type) {
-		if (!ToastIcon.hasKey(type)) {
-			console.warn('blog-toast: type not valid', type);
+	parseIconType(type) {
+		if (!ToastIcon.hasCaselessKey(type)) {
+			console.warn('blog-toast: icon type not valid', type);
 			return ToastIcon.Info;
 		}
-		console.log('asdf');
-		return ToastIcon[type];
+		return ToastIcon.getCaselessValueFromKey(type);
 	},
 
 	getTimeout(text) {
