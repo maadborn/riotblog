@@ -1,7 +1,9 @@
+@import '../../styles/variables';
+
 blog-post {
 	& {
 		display: block;
-		border-bottom: 1px dotted #FBE9D4;
+		border-bottom: 1px dotted transparentize($font-color, 0.5);
 		padding: 1em 0 2em 0;
 	}
 	
